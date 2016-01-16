@@ -15,12 +15,10 @@ struct OmekaItem {
 	omeka_item_type.OmekaItemType item_type;
 	date_time.DateTime modified;
 	bool public;
+	list<omeka_tag.OmekaTag> tags;
 	url.Url url;
 
 	// JSON representation of this item
 	// @validation {"minLength": 1}
 	optional string json;
-
-	// @validation {"minLength": 1}
-	optional list<omeka_tag.OmekaTag> tags;
 }
