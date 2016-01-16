@@ -7,9 +7,8 @@ include "thryft/native/date_time.thrift"
 include "thryft/native/url.thrift"
 
 struct OmekaItem {
-	list<omeka_element_text.OmekaElementText> element_texts;
-
 	date_time.DateTime added;
+	list<omeka_element_text.OmekaElementText> element_texts;
 	bool featured;
 	i32 id;
 	omeka_item_type.OmekaItemType item_type;

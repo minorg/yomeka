@@ -10,8 +10,8 @@ class OmekaItem(object):
     class Builder(object):
         def __init__(
             self,
-            element_texts=None,
             added=None,
+            element_texts=None,
             featured=None,
             id=None,  # @ReservedAssignment
             item_type=None,
@@ -22,8 +22,8 @@ class OmekaItem(object):
             json=None,
         ):
             '''
-            :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
             :type added: datetime
+            :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
             :type featured: bool
             :type id: int
             :type item_type: yomeka.api.omeka_item_type.OmekaItemType
@@ -34,8 +34,8 @@ class OmekaItem(object):
             :type json: str or None
             '''
 
-            self.__element_texts = element_texts
             self.__added = added
+            self.__element_texts = element_texts
             self.__featured = featured
             self.__id = id
             self.__item_type = item_type
@@ -46,7 +46,7 @@ class OmekaItem(object):
             self.__json = json
 
         def build(self):
-            return OmekaItem(element_texts=self.__element_texts, added=self.__added, featured=self.__featured, id=self.__id, item_type=self.__item_type, modified=self.__modified, public=self.__public, tags=self.__tags, url=self.__url, json=self.__json)
+            return OmekaItem(added=self.__added, element_texts=self.__element_texts, featured=self.__featured, id=self.__id, item_type=self.__item_type, modified=self.__modified, public=self.__public, tags=self.__tags, url=self.__url, json=self.__json)
 
         @property
         def added(self):
@@ -202,8 +202,8 @@ class OmekaItem(object):
 
         def update(self, omeka_item):
             '''
-            :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
             :type added: datetime
+            :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
             :type featured: bool
             :type id: int
             :type item_type: yomeka.api.omeka_item_type.OmekaItemType
@@ -215,8 +215,8 @@ class OmekaItem(object):
             '''
 
             if isinstance(omeka_item, OmekaItem):
-                self.set_element_texts(omeka_item.element_texts)
                 self.set_added(omeka_item.added)
+                self.set_element_texts(omeka_item.element_texts)
                 self.set_featured(omeka_item.featured)
                 self.set_id(omeka_item.id)
                 self.set_item_type(omeka_item.item_type)
@@ -322,8 +322,8 @@ class OmekaItem(object):
 
     def __init__(
         self,
-        element_texts,
         added,
+        element_texts,
         featured,
         id,  # @ReservedAssignment
         item_type,
@@ -334,8 +334,8 @@ class OmekaItem(object):
         json=None,
     ):
         '''
-        :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
         :type added: datetime
+        :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
         :type featured: bool
         :type id: int
         :type item_type: yomeka.api.omeka_item_type.OmekaItemType
@@ -346,17 +346,17 @@ class OmekaItem(object):
         :type json: str or None
         '''
 
-        if element_texts is None:
-            raise ValueError('element_texts is required')
-        if not (isinstance(element_texts, tuple) and len(list(ifilterfalse(lambda _: isinstance(_, yomeka.api.omeka_element_text.OmekaElementText), element_texts))) == 0):
-            raise TypeError("expected element_texts to be a tuple(yomeka.api.omeka_element_text.OmekaElementText) but it is a %s" % getattr(__builtin__, 'type')(element_texts))
-        self.__element_texts = element_texts
-
         if added is None:
             raise ValueError('added is required')
         if not isinstance(added, datetime):
             raise TypeError("expected added to be a datetime but it is a %s" % getattr(__builtin__, 'type')(added))
         self.__added = added
+
+        if element_texts is None:
+            raise ValueError('element_texts is required')
+        if not (isinstance(element_texts, tuple) and len(list(ifilterfalse(lambda _: isinstance(_, yomeka.api.omeka_element_text.OmekaElementText), element_texts))) == 0):
+            raise TypeError("expected element_texts to be a tuple(yomeka.api.omeka_element_text.OmekaElementText) but it is a %s" % getattr(__builtin__, 'type')(element_texts))
+        self.__element_texts = element_texts
 
         if featured is None:
             raise ValueError('featured is required')
@@ -408,9 +408,9 @@ class OmekaItem(object):
         self.__json = json
 
     def __eq__(self, other):
-        if self.element_texts != other.element_texts:
-            return False
         if self.added != other.added:
+            return False
+        if self.element_texts != other.element_texts:
             return False
         if self.featured != other.featured:
             return False
@@ -431,7 +431,7 @@ class OmekaItem(object):
         return True
 
     def __hash__(self):
-        return hash((self.element_texts,self.added,self.featured,self.id,self.item_type,self.modified,self.public,self.tags,self.url,self.json,))
+        return hash((self.added,self.element_texts,self.featured,self.id,self.item_type,self.modified,self.public,self.tags,self.url,self.json,))
 
     def __iter__(self):
         return iter(self.as_tuple())
@@ -441,8 +441,8 @@ class OmekaItem(object):
 
     def __repr__(self):
         field_reprs = []
-        field_reprs.append('element_texts=' + repr(self.element_texts))
         field_reprs.append('added=' + repr(self.added))
+        field_reprs.append('element_texts=' + repr(self.element_texts))
         field_reprs.append('featured=' + repr(self.featured))
         field_reprs.append('id=' + repr(self.id))
         field_reprs.append('item_type=' + repr(self.item_type))
@@ -456,8 +456,8 @@ class OmekaItem(object):
 
     def __str__(self):
         field_reprs = []
-        field_reprs.append('element_texts=' + repr(self.element_texts))
         field_reprs.append('added=' + repr(self.added))
+        field_reprs.append('element_texts=' + repr(self.element_texts))
         field_reprs.append('featured=' + repr(self.featured))
         field_reprs.append('id=' + repr(self.id))
         field_reprs.append('item_type=' + repr(self.item_type))
@@ -484,7 +484,7 @@ class OmekaItem(object):
         :rtype: dict
         '''
 
-        return {'element_texts': self.element_texts, 'added': self.added, 'featured': self.featured, 'id': self.id, 'item_type': self.item_type, 'modified': self.modified, 'public': self.public, 'tags': self.tags, 'url': self.url, 'json': self.json}
+        return {'added': self.added, 'element_texts': self.element_texts, 'featured': self.featured, 'id': self.id, 'item_type': self.item_type, 'modified': self.modified, 'public': self.public, 'tags': self.tags, 'url': self.url, 'json': self.json}
 
     def as_tuple(self):
         '''
@@ -493,7 +493,7 @@ class OmekaItem(object):
         :rtype: tuple
         '''
 
-        return (self.element_texts, self.added, self.featured, self.id, self.item_type, self.modified, self.public, self.tags, self.url, self.json,)
+        return (self.added, self.element_texts, self.featured, self.id, self.item_type, self.modified, self.public, self.tags, self.url, self.json,)
 
     @property
     def element_texts(self):
@@ -567,10 +567,10 @@ class OmekaItem(object):
             ifield_name, ifield_type, _ifield_id = iprot.read_field_begin()
             if ifield_type == 0: # STOP
                 break
-            elif ifield_name == 'element_texts':
-                init_kwds['element_texts'] = tuple([yomeka.api.omeka_element_text.OmekaElementText.read(iprot) for _ in xrange(iprot.read_list_begin()[1])] + (iprot.read_list_end() is None and []))
             elif ifield_name == 'added':
                 init_kwds['added'] = iprot.read_date_time()
+            elif ifield_name == 'element_texts':
+                init_kwds['element_texts'] = tuple([yomeka.api.omeka_element_text.OmekaElementText.read(iprot) for _ in xrange(iprot.read_list_begin()[1])] + (iprot.read_list_end() is None and []))
             elif ifield_name == 'featured':
                 init_kwds['featured'] = iprot.read_bool()
             elif ifield_name == 'id':
@@ -597,8 +597,8 @@ class OmekaItem(object):
 
     def replace(
         self,
-        element_texts=None,
         added=None,
+        element_texts=None,
         featured=None,
         id=None,  # @ReservedAssignment
         item_type=None,
@@ -611,8 +611,8 @@ class OmekaItem(object):
         '''
         Copy this object, replace one or more fields, and return the copy.
 
-        :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText) or None
         :type added: datetime or None
+        :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText) or None
         :type featured: bool or None
         :type id: int or None
         :type item_type: yomeka.api.omeka_item_type.OmekaItemType or None
@@ -624,10 +624,10 @@ class OmekaItem(object):
         :rtype: yomeka.api.omeka_item.OmekaItem
         '''
 
-        if element_texts is None:
-            element_texts = self.element_texts
         if added is None:
             added = self.added
+        if element_texts is None:
+            element_texts = self.element_texts
         if featured is None:
             featured = self.featured
         if id is None:
@@ -644,7 +644,7 @@ class OmekaItem(object):
             url = self.url
         if json is None:
             json = self.json
-        return self.__class__(element_texts=element_texts, added=added, featured=featured, id=id, item_type=item_type, modified=modified, public=public, tags=tags, url=url, json=json)
+        return self.__class__(added=added, element_texts=element_texts, featured=featured, id=id, item_type=item_type, modified=modified, public=public, tags=tags, url=url, json=json)
 
     @property
     def tags(self):
@@ -672,15 +672,15 @@ class OmekaItem(object):
 
         oprot.write_struct_begin('OmekaItem')
 
+        oprot.write_field_begin(name='added', type=10, id=None)
+        oprot.write_date_time(self.added)
+        oprot.write_field_end()
+
         oprot.write_field_begin(name='element_texts', type=15, id=None)
         oprot.write_list_begin(12, len(self.element_texts))
         for _0 in self.element_texts:
             _0.write(oprot)
         oprot.write_list_end()
-        oprot.write_field_end()
-
-        oprot.write_field_begin(name='added', type=10, id=None)
-        oprot.write_date_time(self.added)
         oprot.write_field_end()
 
         oprot.write_field_begin(name='featured', type=2, id=None)
