@@ -40,15 +40,20 @@ class OmekaApi(object):
 
     def get_files(
         self,
+        item=None,
         page=None,
         per_page=None,
     ):
         '''
+        :type item: int or None
         :type page: int or None
         :type per_page: int or None
         :rtype: tuple(yomeka.api.omeka_file.OmekaFile)
         '''
 
+        if item is not None:
+            if not isinstance(item, int):
+                raise TypeError("expected item to be a int but it is a %s" % getattr(__builtin__, 'type')(item))
         if page is not None:
             if not isinstance(page, int):
                 raise TypeError("expected page to be a int but it is a %s" % getattr(__builtin__, 'type')(page))
@@ -56,7 +61,7 @@ class OmekaApi(object):
             if not isinstance(per_page, int):
                 raise TypeError("expected per_page to be a int but it is a %s" % getattr(__builtin__, 'type')(per_page))
 
-        get_files_return_value = self._get_files(page=page, per_page=per_page)
+        get_files_return_value = self._get_files(item=item, page=page, per_page=per_page)
 
         if not (isinstance(get_files_return_value, tuple) and len(list(ifilterfalse(lambda _: isinstance(_, yomeka.api.omeka_file.OmekaFile), get_files_return_value))) == 0):
             raise TypeError(getattr(__builtin__, 'type')(get_files_return_value))
@@ -65,6 +70,7 @@ class OmekaApi(object):
 
     def _get_files(
         self,
+        item,
         page,
         per_page,
     ):

@@ -16,6 +16,7 @@ service OmekaApi {
 
 	list<omeka_file.OmekaFile>
 	get_files(
+		optional i32 item,
 		optional i32 page,
 		optional i32 per_page
 	) throws (
