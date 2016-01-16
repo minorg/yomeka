@@ -101,12 +101,15 @@ class OmekaJsonParser(object):
         element_texts = self.__parse_element_texts(item_dict.get('element_texts', []))
 
         item_type_dict = item_dict['item_type']
-        item_type = \
-            OmekaItemType.Builder()\
-                .set_id(item_type_dict['id'])\
-                .set_name(item_type_dict['name'])\
-                .set_url(item_type_dict['url'])\
-                .build()
+        if item_type_dict is not None:
+            item_type = \
+                OmekaItemType.Builder()\
+                    .set_id(item_type_dict['id'])\
+                    .set_name(item_type_dict['name'])\
+                    .set_url(item_type_dict['url'])\
+                    .build()
+        else:
+            item_type = None
 
         tags = []
         for tag_dict in item_dict.get('tags', []):

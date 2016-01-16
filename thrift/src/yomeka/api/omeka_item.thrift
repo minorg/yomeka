@@ -11,11 +11,12 @@ struct OmekaItem {
 	list<omeka_element_text.OmekaElementText> element_texts;
 	bool featured;
 	i32 id;
-	omeka_item_type.OmekaItemType item_type;
 	date_time.DateTime modified;
 	bool public;
 	list<omeka_tag.OmekaTag> tags;
 	url.Url url;
+
+	optional omeka_item_type.OmekaItemType item_type;
 
 	// JSON representation of this item
 	// @validation {"minLength": 1}
