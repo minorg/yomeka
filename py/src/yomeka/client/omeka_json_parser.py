@@ -127,6 +127,7 @@ class OmekaJsonParser(object):
                 .set_added(self.__parse_date_time(item_dict['added']))\
                 .set_element_texts(element_texts)\
                 .set_featured(item_dict['featured'])\
+                .set_files_count(item_dict['files']['count'])\
                 .set_id(item_dict['id'])\
                 .set_item_type(item_type)\
                 .set_json(json.dumps(item_dict))\

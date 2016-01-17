@@ -12,6 +12,7 @@ class OmekaItem(object):
             self,
             added=None,
             element_texts=None,
+            files_count=None,
             featured=None,
             id=None,  # @ReservedAssignment
             modified=None,
@@ -24,6 +25,7 @@ class OmekaItem(object):
             '''
             :type added: datetime
             :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
+            :type files_count: int
             :type featured: bool
             :type id: int
             :type modified: datetime
@@ -36,6 +38,7 @@ class OmekaItem(object):
 
             self.__added = added
             self.__element_texts = element_texts
+            self.__files_count = files_count
             self.__featured = featured
             self.__id = id
             self.__modified = modified
@@ -46,7 +49,7 @@ class OmekaItem(object):
             self.__json = json
 
         def build(self):
-            return OmekaItem(added=self.__added, element_texts=self.__element_texts, featured=self.__featured, id=self.__id, modified=self.__modified, public=self.__public, tags=self.__tags, url=self.__url, item_type=self.__item_type, json=self.__json)
+            return OmekaItem(added=self.__added, element_texts=self.__element_texts, files_count=self.__files_count, featured=self.__featured, id=self.__id, modified=self.__modified, public=self.__public, tags=self.__tags, url=self.__url, item_type=self.__item_type, json=self.__json)
 
         @property
         def added(self):
@@ -71,6 +74,14 @@ class OmekaItem(object):
             '''
 
             return self.__featured
+
+        @property
+        def files_count(self):
+            '''
+            :rtype: int
+            '''
+
+            return self.__files_count
 
         @property
         def id(self):  # @ReservedAssignment
@@ -134,6 +145,14 @@ class OmekaItem(object):
             '''
 
             self.__featured = featured
+            return self
+
+        def set_files_count(self, files_count):
+            '''
+            :type files_count: int
+            '''
+
+            self.__files_count = files_count
             return self
 
         def set_id(self, id):  # @ReservedAssignment
@@ -204,6 +223,7 @@ class OmekaItem(object):
             '''
             :type added: datetime
             :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
+            :type files_count: int
             :type featured: bool
             :type id: int
             :type modified: datetime
@@ -217,6 +237,7 @@ class OmekaItem(object):
             if isinstance(omeka_item, OmekaItem):
                 self.set_added(omeka_item.added)
                 self.set_element_texts(omeka_item.element_texts)
+                self.set_files_count(omeka_item.files_count)
                 self.set_featured(omeka_item.featured)
                 self.set_id(omeka_item.id)
                 self.set_modified(omeka_item.modified)
@@ -263,6 +284,14 @@ class OmekaItem(object):
             '''
 
             self.set_featured(featured)
+
+        @files_count.setter
+        def files_count(self, files_count):
+            '''
+            :type files_count: int
+            '''
+
+            self.set_files_count(files_count)
 
         @id.setter
         def id(self, id):  # @ReservedAssignment
@@ -324,6 +353,7 @@ class OmekaItem(object):
         self,
         added,
         element_texts,
+        files_count,
         featured,
         id,  # @ReservedAssignment
         modified,
@@ -336,6 +366,7 @@ class OmekaItem(object):
         '''
         :type added: datetime
         :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
+        :type files_count: int
         :type featured: bool
         :type id: int
         :type modified: datetime
@@ -357,6 +388,12 @@ class OmekaItem(object):
         if not (isinstance(element_texts, tuple) and len(list(ifilterfalse(lambda _: isinstance(_, yomeka.api.omeka_element_text.OmekaElementText), element_texts))) == 0):
             raise TypeError("expected element_texts to be a tuple(yomeka.api.omeka_element_text.OmekaElementText) but it is a %s" % getattr(__builtin__, 'type')(element_texts))
         self.__element_texts = element_texts
+
+        if files_count is None:
+            raise ValueError('files_count is required')
+        if not isinstance(files_count, (int, long)) and files_count >= 0:
+            raise TypeError("expected files_count to be a int but it is a %s" % getattr(__builtin__, 'type')(files_count))
+        self.__files_count = files_count
 
         if featured is None:
             raise ValueError('featured is required')
@@ -411,6 +448,8 @@ class OmekaItem(object):
             return False
         if self.element_texts != other.element_texts:
             return False
+        if self.files_count != other.files_count:
+            return False
         if self.featured != other.featured:
             return False
         if self.id != other.id:
@@ -430,7 +469,7 @@ class OmekaItem(object):
         return True
 
     def __hash__(self):
-        return hash((self.added,self.element_texts,self.featured,self.id,self.modified,self.public,self.tags,self.url,self.item_type,self.json,))
+        return hash((self.added,self.element_texts,self.files_count,self.featured,self.id,self.modified,self.public,self.tags,self.url,self.item_type,self.json,))
 
     def __iter__(self):
         return iter(self.as_tuple())
@@ -442,6 +481,7 @@ class OmekaItem(object):
         field_reprs = []
         field_reprs.append('added=' + repr(self.added))
         field_reprs.append('element_texts=' + repr(self.element_texts))
+        field_reprs.append('files_count=' + repr(self.files_count))
         field_reprs.append('featured=' + repr(self.featured))
         field_reprs.append('id=' + repr(self.id))
         field_reprs.append('modified=' + repr(self.modified))
@@ -458,6 +498,7 @@ class OmekaItem(object):
         field_reprs = []
         field_reprs.append('added=' + repr(self.added))
         field_reprs.append('element_texts=' + repr(self.element_texts))
+        field_reprs.append('files_count=' + repr(self.files_count))
         field_reprs.append('featured=' + repr(self.featured))
         field_reprs.append('id=' + repr(self.id))
         field_reprs.append('modified=' + repr(self.modified))
@@ -485,7 +526,7 @@ class OmekaItem(object):
         :rtype: dict
         '''
 
-        return {'added': self.added, 'element_texts': self.element_texts, 'featured': self.featured, 'id': self.id, 'modified': self.modified, 'public': self.public, 'tags': self.tags, 'url': self.url, 'item_type': self.item_type, 'json': self.json}
+        return {'added': self.added, 'element_texts': self.element_texts, 'files_count': self.files_count, 'featured': self.featured, 'id': self.id, 'modified': self.modified, 'public': self.public, 'tags': self.tags, 'url': self.url, 'item_type': self.item_type, 'json': self.json}
 
     def as_tuple(self):
         '''
@@ -494,7 +535,7 @@ class OmekaItem(object):
         :rtype: tuple
         '''
 
-        return (self.added, self.element_texts, self.featured, self.id, self.modified, self.public, self.tags, self.url, self.item_type, self.json,)
+        return (self.added, self.element_texts, self.files_count, self.featured, self.id, self.modified, self.public, self.tags, self.url, self.item_type, self.json,)
 
     @property
     def element_texts(self):
@@ -511,6 +552,14 @@ class OmekaItem(object):
         '''
 
         return self.__featured
+
+    @property
+    def files_count(self):
+        '''
+        :rtype: int
+        '''
+
+        return self.__files_count
 
     @property
     def id(self):  # @ReservedAssignment
@@ -572,6 +621,8 @@ class OmekaItem(object):
                 init_kwds['added'] = iprot.read_date_time()
             elif ifield_name == 'element_texts':
                 init_kwds['element_texts'] = tuple([yomeka.api.omeka_element_text.OmekaElementText.read(iprot) for _ in xrange(iprot.read_list_begin()[1])] + (iprot.read_list_end() is None and []))
+            elif ifield_name == 'files_count':
+                init_kwds['files_count'] = iprot.read_u32()
             elif ifield_name == 'featured':
                 init_kwds['featured'] = iprot.read_bool()
             elif ifield_name == 'id':
@@ -600,6 +651,7 @@ class OmekaItem(object):
         self,
         added=None,
         element_texts=None,
+        files_count=None,
         featured=None,
         id=None,  # @ReservedAssignment
         modified=None,
@@ -614,6 +666,7 @@ class OmekaItem(object):
 
         :type added: datetime or None
         :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText) or None
+        :type files_count: int or None
         :type featured: bool or None
         :type id: int or None
         :type modified: datetime or None
@@ -629,6 +682,8 @@ class OmekaItem(object):
             added = self.added
         if element_texts is None:
             element_texts = self.element_texts
+        if files_count is None:
+            files_count = self.files_count
         if featured is None:
             featured = self.featured
         if id is None:
@@ -645,7 +700,7 @@ class OmekaItem(object):
             item_type = self.item_type
         if json is None:
             json = self.json
-        return self.__class__(added=added, element_texts=element_texts, featured=featured, id=id, modified=modified, public=public, tags=tags, url=url, item_type=item_type, json=json)
+        return self.__class__(added=added, element_texts=element_texts, files_count=files_count, featured=featured, id=id, modified=modified, public=public, tags=tags, url=url, item_type=item_type, json=json)
 
     @property
     def tags(self):
@@ -682,6 +737,10 @@ class OmekaItem(object):
         for _0 in self.element_texts:
             _0.write(oprot)
         oprot.write_list_end()
+        oprot.write_field_end()
+
+        oprot.write_field_begin(name='files_count', type=8, id=None)
+        oprot.write_u32(self.files_count)
         oprot.write_field_end()
 
         oprot.write_field_begin(name='featured', type=2, id=None)
