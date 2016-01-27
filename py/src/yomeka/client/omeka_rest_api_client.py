@@ -21,6 +21,8 @@ class OmekaRestApiClient(OmekaApi):
     def _get_collections(self, **kwds):
         url = self.__endpoint_url + 'api/collections?key=' + self.__api_key
         for key, value in kwds.iteritems():
+            if value is None:
+                continue
             url = url + "&%(key)s=%(value)s" % locals()
         return self.__parser.parse_collection_dicts(json.loads(self.__get_url(url)))
 
@@ -30,6 +32,8 @@ class OmekaRestApiClient(OmekaApi):
     def _get_files(self, **kwds):
         url = self.__endpoint_url + 'api/files?key=' + self.__api_key
         for key, value in kwds.iteritems():
+            if value is None:
+                continue
             url = url + "&%(key)s=%(value)s" % locals()
         return self.__parser.parse_file_dicts(json.loads(self.__get_url(url)))
 
@@ -39,6 +43,8 @@ class OmekaRestApiClient(OmekaApi):
     def _get_items(self, **kwds):
         url = self.__endpoint_url + 'api/items?key=' + self.__api_key
         for key, value in kwds.iteritems():
+            if value is None:
+                continue
             url = url + "&%(key)s=%(value)s" % locals()
         return self.__parser.parse_item_dicts(json.loads(self.__get_url(url)))
 
