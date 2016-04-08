@@ -11,8 +11,8 @@ struct OmekaFile {
 	// @validation {"minLength": 1}
 	string authentication;
 	list<omeka_element_text.OmekaElementText> element_texts;
+    omeka_file_urls.OmekaFileUrls file_urls;
 	bool has_derivative_image;
-	omeka_file_urls.OmekaFileUrls file_urls;
 	i32 id;
 	i32 item_id;
 	// @validation {"minLength": 1}
@@ -20,8 +20,8 @@ struct OmekaFile {
 	date_time.DateTime modified;
 	// @validation {"minLength": 1}
 	string original_filename;
-	bool stored;
 	u32.u32 size;
+    bool stored;
 	// @validation {"minLength": 1}
 	string type_os;
 	url.Url url;

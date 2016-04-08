@@ -12,15 +12,15 @@ class OmekaFile(object):
             added=None,
             authentication=None,
             element_texts=None,
-            has_derivative_image=None,
             file_urls=None,
+            has_derivative_image=None,
             id=None,  # @ReservedAssignment
             item_id=None,
             mime_type=None,
             modified=None,
             original_filename=None,
-            stored=None,
             size=None,
+            stored=None,
             type_os=None,
             url=None,
             json=None,
@@ -29,15 +29,15 @@ class OmekaFile(object):
             :type added: datetime
             :type authentication: str
             :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-            :type has_derivative_image: bool
             :type file_urls: yomeka.api.omeka_file_urls.OmekaFileUrls
+            :type has_derivative_image: bool
             :type id: int
             :type item_id: int
             :type mime_type: str
             :type modified: datetime
             :type original_filename: str
-            :type stored: bool
             :type size: int
+            :type stored: bool
             :type type_os: str
             :type url: str
             :type json: str or None
@@ -46,21 +46,21 @@ class OmekaFile(object):
             self.__added = added
             self.__authentication = authentication
             self.__element_texts = element_texts
-            self.__has_derivative_image = has_derivative_image
             self.__file_urls = file_urls
+            self.__has_derivative_image = has_derivative_image
             self.__id = id
             self.__item_id = item_id
             self.__mime_type = mime_type
             self.__modified = modified
             self.__original_filename = original_filename
-            self.__stored = stored
             self.__size = size
+            self.__stored = stored
             self.__type_os = type_os
             self.__url = url
             self.__json = json
 
         def build(self):
-            return OmekaFile(added=self.__added, authentication=self.__authentication, element_texts=self.__element_texts, has_derivative_image=self.__has_derivative_image, file_urls=self.__file_urls, id=self.__id, item_id=self.__item_id, mime_type=self.__mime_type, modified=self.__modified, original_filename=self.__original_filename, stored=self.__stored, size=self.__size, type_os=self.__type_os, url=self.__url, json=self.__json)
+            return OmekaFile(added=self.__added, authentication=self.__authentication, element_texts=self.__element_texts, file_urls=self.__file_urls, has_derivative_image=self.__has_derivative_image, id=self.__id, item_id=self.__item_id, mime_type=self.__mime_type, modified=self.__modified, original_filename=self.__original_filename, size=self.__size, stored=self.__stored, type_os=self.__type_os, url=self.__url, json=self.__json)
 
         @property
         def added(self):
@@ -299,15 +299,15 @@ class OmekaFile(object):
             :type added: datetime
             :type authentication: str
             :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-            :type has_derivative_image: bool
             :type file_urls: yomeka.api.omeka_file_urls.OmekaFileUrls
+            :type has_derivative_image: bool
             :type id: int
             :type item_id: int
             :type mime_type: str
             :type modified: datetime
             :type original_filename: str
-            :type stored: bool
             :type size: int
+            :type stored: bool
             :type type_os: str
             :type url: str
             :type json: str or None
@@ -317,15 +317,15 @@ class OmekaFile(object):
                 self.set_added(omeka_file.added)
                 self.set_authentication(omeka_file.authentication)
                 self.set_element_texts(omeka_file.element_texts)
-                self.set_has_derivative_image(omeka_file.has_derivative_image)
                 self.set_file_urls(omeka_file.file_urls)
+                self.set_has_derivative_image(omeka_file.has_derivative_image)
                 self.set_id(omeka_file.id)
                 self.set_item_id(omeka_file.item_id)
                 self.set_mime_type(omeka_file.mime_type)
                 self.set_modified(omeka_file.modified)
                 self.set_original_filename(omeka_file.original_filename)
-                self.set_stored(omeka_file.stored)
                 self.set_size(omeka_file.size)
+                self.set_stored(omeka_file.stored)
                 self.set_type_os(omeka_file.type_os)
                 self.set_url(omeka_file.url)
                 self.set_json(omeka_file.json)
@@ -469,15 +469,15 @@ class OmekaFile(object):
         added,
         authentication,
         element_texts,
-        has_derivative_image,
         file_urls,
+        has_derivative_image,
         id,  # @ReservedAssignment
         item_id,
         mime_type,
         modified,
         original_filename,
-        stored,
         size,
+        stored,
         type_os,
         url,
         json=None,
@@ -486,15 +486,15 @@ class OmekaFile(object):
         :type added: datetime
         :type authentication: str
         :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-        :type has_derivative_image: bool
         :type file_urls: yomeka.api.omeka_file_urls.OmekaFileUrls
+        :type has_derivative_image: bool
         :type id: int
         :type item_id: int
         :type mime_type: str
         :type modified: datetime
         :type original_filename: str
-        :type stored: bool
         :type size: int
+        :type stored: bool
         :type type_os: str
         :type url: str
         :type json: str or None
@@ -520,17 +520,17 @@ class OmekaFile(object):
             raise TypeError("expected element_texts to be a tuple(yomeka.api.omeka_element_text.OmekaElementText) but it is a %s" % getattr(__builtin__, 'type')(element_texts))
         self.__element_texts = element_texts
 
-        if has_derivative_image is None:
-            raise ValueError('has_derivative_image is required')
-        if not isinstance(has_derivative_image, bool):
-            raise TypeError("expected has_derivative_image to be a bool but it is a %s" % getattr(__builtin__, 'type')(has_derivative_image))
-        self.__has_derivative_image = has_derivative_image
-
         if file_urls is None:
             raise ValueError('file_urls is required')
         if not isinstance(file_urls, yomeka.api.omeka_file_urls.OmekaFileUrls):
             raise TypeError("expected file_urls to be a yomeka.api.omeka_file_urls.OmekaFileUrls but it is a %s" % getattr(__builtin__, 'type')(file_urls))
         self.__file_urls = file_urls
+
+        if has_derivative_image is None:
+            raise ValueError('has_derivative_image is required')
+        if not isinstance(has_derivative_image, bool):
+            raise TypeError("expected has_derivative_image to be a bool but it is a %s" % getattr(__builtin__, 'type')(has_derivative_image))
+        self.__has_derivative_image = has_derivative_image
 
         if id is None:
             raise ValueError('id is required')
@@ -566,17 +566,17 @@ class OmekaFile(object):
             raise ValueError("expected len(original_filename) to be >= 1, was %d" % len(original_filename))
         self.__original_filename = original_filename
 
-        if stored is None:
-            raise ValueError('stored is required')
-        if not isinstance(stored, bool):
-            raise TypeError("expected stored to be a bool but it is a %s" % getattr(__builtin__, 'type')(stored))
-        self.__stored = stored
-
         if size is None:
             raise ValueError('size is required')
         if not isinstance(size, (int, long)) and size >= 0:
             raise TypeError("expected size to be a int but it is a %s" % getattr(__builtin__, 'type')(size))
         self.__size = size
+
+        if stored is None:
+            raise ValueError('stored is required')
+        if not isinstance(stored, bool):
+            raise TypeError("expected stored to be a bool but it is a %s" % getattr(__builtin__, 'type')(stored))
+        self.__stored = stored
 
         if type_os is None:
             raise ValueError('type_os is required')
@@ -606,9 +606,9 @@ class OmekaFile(object):
             return False
         if self.element_texts != other.element_texts:
             return False
-        if self.has_derivative_image != other.has_derivative_image:
-            return False
         if self.file_urls != other.file_urls:
+            return False
+        if self.has_derivative_image != other.has_derivative_image:
             return False
         if self.id != other.id:
             return False
@@ -620,9 +620,9 @@ class OmekaFile(object):
             return False
         if self.original_filename != other.original_filename:
             return False
-        if self.stored != other.stored:
-            return False
         if self.size != other.size:
+            return False
+        if self.stored != other.stored:
             return False
         if self.type_os != other.type_os:
             return False
@@ -633,7 +633,7 @@ class OmekaFile(object):
         return True
 
     def __hash__(self):
-        return hash((self.added,self.authentication,self.element_texts,self.has_derivative_image,self.file_urls,self.id,self.item_id,self.mime_type,self.modified,self.original_filename,self.stored,self.size,self.type_os,self.url,self.json,))
+        return hash((self.added,self.authentication,self.element_texts,self.file_urls,self.has_derivative_image,self.id,self.item_id,self.mime_type,self.modified,self.original_filename,self.size,self.stored,self.type_os,self.url,self.json,))
 
     def __iter__(self):
         return iter(self.as_tuple())
@@ -646,15 +646,15 @@ class OmekaFile(object):
         field_reprs.append('added=' + repr(self.added))
         field_reprs.append('authentication=' + "'" + self.authentication.encode('ascii', 'replace') + "'")
         field_reprs.append('element_texts=' + repr(self.element_texts))
-        field_reprs.append('has_derivative_image=' + repr(self.has_derivative_image))
         field_reprs.append('file_urls=' + repr(self.file_urls))
+        field_reprs.append('has_derivative_image=' + repr(self.has_derivative_image))
         field_reprs.append('id=' + repr(self.id))
         field_reprs.append('item_id=' + repr(self.item_id))
         field_reprs.append('mime_type=' + "'" + self.mime_type.encode('ascii', 'replace') + "'")
         field_reprs.append('modified=' + repr(self.modified))
         field_reprs.append('original_filename=' + "'" + self.original_filename.encode('ascii', 'replace') + "'")
-        field_reprs.append('stored=' + repr(self.stored))
         field_reprs.append('size=' + repr(self.size))
+        field_reprs.append('stored=' + repr(self.stored))
         field_reprs.append('type_os=' + "'" + self.type_os.encode('ascii', 'replace') + "'")
         field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace') + "'")
         if self.json is not None:
@@ -666,15 +666,15 @@ class OmekaFile(object):
         field_reprs.append('added=' + repr(self.added))
         field_reprs.append('authentication=' + "'" + self.authentication.encode('ascii', 'replace') + "'")
         field_reprs.append('element_texts=' + repr(self.element_texts))
-        field_reprs.append('has_derivative_image=' + repr(self.has_derivative_image))
         field_reprs.append('file_urls=' + repr(self.file_urls))
+        field_reprs.append('has_derivative_image=' + repr(self.has_derivative_image))
         field_reprs.append('id=' + repr(self.id))
         field_reprs.append('item_id=' + repr(self.item_id))
         field_reprs.append('mime_type=' + "'" + self.mime_type.encode('ascii', 'replace') + "'")
         field_reprs.append('modified=' + repr(self.modified))
         field_reprs.append('original_filename=' + "'" + self.original_filename.encode('ascii', 'replace') + "'")
-        field_reprs.append('stored=' + repr(self.stored))
         field_reprs.append('size=' + repr(self.size))
+        field_reprs.append('stored=' + repr(self.stored))
         field_reprs.append('type_os=' + "'" + self.type_os.encode('ascii', 'replace') + "'")
         field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace') + "'")
         if self.json is not None:
@@ -696,7 +696,7 @@ class OmekaFile(object):
         :rtype: dict
         '''
 
-        return {'added': self.added, 'authentication': self.authentication, 'element_texts': self.element_texts, 'has_derivative_image': self.has_derivative_image, 'file_urls': self.file_urls, 'id': self.id, 'item_id': self.item_id, 'mime_type': self.mime_type, 'modified': self.modified, 'original_filename': self.original_filename, 'stored': self.stored, 'size': self.size, 'type_os': self.type_os, 'url': self.url, 'json': self.json}
+        return {'added': self.added, 'authentication': self.authentication, 'element_texts': self.element_texts, 'file_urls': self.file_urls, 'has_derivative_image': self.has_derivative_image, 'id': self.id, 'item_id': self.item_id, 'mime_type': self.mime_type, 'modified': self.modified, 'original_filename': self.original_filename, 'size': self.size, 'stored': self.stored, 'type_os': self.type_os, 'url': self.url, 'json': self.json}
 
     def as_tuple(self):
         '''
@@ -705,7 +705,7 @@ class OmekaFile(object):
         :rtype: tuple
         '''
 
-        return (self.added, self.authentication, self.element_texts, self.has_derivative_image, self.file_urls, self.id, self.item_id, self.mime_type, self.modified, self.original_filename, self.stored, self.size, self.type_os, self.url, self.json,)
+        return (self.added, self.authentication, self.element_texts, self.file_urls, self.has_derivative_image, self.id, self.item_id, self.mime_type, self.modified, self.original_filename, self.size, self.stored, self.type_os, self.url, self.json,)
 
     @property
     def authentication(self):
@@ -809,10 +809,10 @@ class OmekaFile(object):
                 init_kwds['authentication'] = iprot.read_string()
             elif ifield_name == 'element_texts':
                 init_kwds['element_texts'] = tuple([yomeka.api.omeka_element_text.OmekaElementText.read(iprot) for _ in xrange(iprot.read_list_begin()[1])] + (iprot.read_list_end() is None and []))
-            elif ifield_name == 'has_derivative_image':
-                init_kwds['has_derivative_image'] = iprot.read_bool()
             elif ifield_name == 'file_urls':
                 init_kwds['file_urls'] = yomeka.api.omeka_file_urls.OmekaFileUrls.read(iprot)
+            elif ifield_name == 'has_derivative_image':
+                init_kwds['has_derivative_image'] = iprot.read_bool()
             elif ifield_name == 'id':
                 init_kwds['id'] = iprot.read_i32()
             elif ifield_name == 'item_id':
@@ -823,10 +823,10 @@ class OmekaFile(object):
                 init_kwds['modified'] = iprot.read_date_time()
             elif ifield_name == 'original_filename':
                 init_kwds['original_filename'] = iprot.read_string()
-            elif ifield_name == 'stored':
-                init_kwds['stored'] = iprot.read_bool()
             elif ifield_name == 'size':
                 init_kwds['size'] = iprot.read_u32()
+            elif ifield_name == 'stored':
+                init_kwds['stored'] = iprot.read_bool()
             elif ifield_name == 'type_os':
                 init_kwds['type_os'] = iprot.read_string()
             elif ifield_name == 'url':
@@ -846,15 +846,15 @@ class OmekaFile(object):
         added=None,
         authentication=None,
         element_texts=None,
-        has_derivative_image=None,
         file_urls=None,
+        has_derivative_image=None,
         id=None,  # @ReservedAssignment
         item_id=None,
         mime_type=None,
         modified=None,
         original_filename=None,
-        stored=None,
         size=None,
+        stored=None,
         type_os=None,
         url=None,
         json=None,
@@ -865,15 +865,15 @@ class OmekaFile(object):
         :type added: datetime or None
         :type authentication: str or None
         :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText) or None
-        :type has_derivative_image: bool or None
         :type file_urls: yomeka.api.omeka_file_urls.OmekaFileUrls or None
+        :type has_derivative_image: bool or None
         :type id: int or None
         :type item_id: int or None
         :type mime_type: str or None
         :type modified: datetime or None
         :type original_filename: str or None
-        :type stored: bool or None
         :type size: int or None
+        :type stored: bool or None
         :type type_os: str or None
         :type url: str or None
         :type json: str or None
@@ -886,10 +886,10 @@ class OmekaFile(object):
             authentication = self.authentication
         if element_texts is None:
             element_texts = self.element_texts
-        if has_derivative_image is None:
-            has_derivative_image = self.has_derivative_image
         if file_urls is None:
             file_urls = self.file_urls
+        if has_derivative_image is None:
+            has_derivative_image = self.has_derivative_image
         if id is None:
             id = self.id  # @ReservedAssignment
         if item_id is None:
@@ -900,17 +900,17 @@ class OmekaFile(object):
             modified = self.modified
         if original_filename is None:
             original_filename = self.original_filename
-        if stored is None:
-            stored = self.stored
         if size is None:
             size = self.size
+        if stored is None:
+            stored = self.stored
         if type_os is None:
             type_os = self.type_os
         if url is None:
             url = self.url
         if json is None:
             json = self.json
-        return self.__class__(added=added, authentication=authentication, element_texts=element_texts, has_derivative_image=has_derivative_image, file_urls=file_urls, id=id, item_id=item_id, mime_type=mime_type, modified=modified, original_filename=original_filename, stored=stored, size=size, type_os=type_os, url=url, json=json)
+        return self.__class__(added=added, authentication=authentication, element_texts=element_texts, file_urls=file_urls, has_derivative_image=has_derivative_image, id=id, item_id=item_id, mime_type=mime_type, modified=modified, original_filename=original_filename, size=size, stored=stored, type_os=type_os, url=url, json=json)
 
     @property
     def size(self):
@@ -969,12 +969,12 @@ class OmekaFile(object):
         oprot.write_list_end()
         oprot.write_field_end()
 
-        oprot.write_field_begin(name='has_derivative_image', type=2, id=None)
-        oprot.write_bool(self.has_derivative_image)
-        oprot.write_field_end()
-
         oprot.write_field_begin(name='file_urls', type=12, id=None)
         self.file_urls.write(oprot)
+        oprot.write_field_end()
+
+        oprot.write_field_begin(name='has_derivative_image', type=2, id=None)
+        oprot.write_bool(self.has_derivative_image)
         oprot.write_field_end()
 
         oprot.write_field_begin(name='id', type=8, id=None)
@@ -997,12 +997,12 @@ class OmekaFile(object):
         oprot.write_string(self.original_filename)
         oprot.write_field_end()
 
-        oprot.write_field_begin(name='stored', type=2, id=None)
-        oprot.write_bool(self.stored)
-        oprot.write_field_end()
-
         oprot.write_field_begin(name='size', type=8, id=None)
         oprot.write_u32(self.size)
+        oprot.write_field_end()
+
+        oprot.write_field_begin(name='stored', type=2, id=None)
+        oprot.write_bool(self.stored)
         oprot.write_field_end()
 
         oprot.write_field_begin(name='type_os', type=11, id=None)

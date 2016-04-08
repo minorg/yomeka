@@ -1,6 +1,5 @@
+from datetime import datetime
 import json
-
-import dateparser
 
 from yomeka.api.omeka_collection import OmekaCollection
 from yomeka.api.omeka_element import OmekaElement
@@ -35,7 +34,9 @@ class OmekaJsonParser(object):
         return tuple(collections)
 
     def __parse_date_time(self, date_time_str):
-        return dateparser.parse(date_time_str)
+        # 2011-01-30T21:15:46+00:00
+        assert date_time_str.endswith('+00:00')
+        return datetime.strptime(date_time_str[:-6], '%Y-%m-%dT%H:%M:%S')
 
     def __parse_element_texts(self, element_text_dicts):
         element_texts = []

@@ -6,6 +6,33 @@ import yomeka.api.omeka_item
 
 
 class OmekaApi(object):
+    def get_collection(
+        self,
+        id=None,  # @ReservedAssignment
+    ):
+        '''
+        :type id: int
+        :rtype: yomeka.api.omeka_collection.OmekaCollection
+        '''
+
+        if id is None:
+            raise ValueError('id is required')
+        if not isinstance(id, int):
+            raise TypeError("expected id to be a int but it is a %s" % getattr(__builtin__, 'type')(id))
+
+        get_collection_return_value = self._get_collection(id=id)
+
+        if not isinstance(get_collection_return_value, yomeka.api.omeka_collection.OmekaCollection):
+            raise TypeError(getattr(__builtin__, 'type')(get_collection_return_value))
+
+        return get_collection_return_value
+
+    def _get_collection(
+        self,
+        id,  # @ReservedAssignment
+    ):
+        raise NotImplementedError(self.__class__.__module__ + '.' + self.__class__.__name__ + '._get_collection')
+
     def get_collections(
         self,
         page=None,
@@ -75,6 +102,33 @@ class OmekaApi(object):
         per_page,
     ):
         raise NotImplementedError(self.__class__.__module__ + '.' + self.__class__.__name__ + '._get_files')
+
+    def get_item(
+        self,
+        id=None,  # @ReservedAssignment
+    ):
+        '''
+        :type id: int
+        :rtype: yomeka.api.omeka_item.OmekaItem
+        '''
+
+        if id is None:
+            raise ValueError('id is required')
+        if not isinstance(id, int):
+            raise TypeError("expected id to be a int but it is a %s" % getattr(__builtin__, 'type')(id))
+
+        get_item_return_value = self._get_item(id=id)
+
+        if not isinstance(get_item_return_value, yomeka.api.omeka_item.OmekaItem):
+            raise TypeError(getattr(__builtin__, 'type')(get_item_return_value))
+
+        return get_item_return_value
+
+    def _get_item(
+        self,
+        id,  # @ReservedAssignment
+    ):
+        raise NotImplementedError(self.__class__.__module__ + '.' + self.__class__.__name__ + '._get_item')
 
     def get_items(
         self,
