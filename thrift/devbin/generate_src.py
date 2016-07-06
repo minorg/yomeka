@@ -19,6 +19,7 @@ sys.path.insert(0, os.path.join(THRYFT_ROOT_DIR_PATH, 'compiler', 'src'))
 # Generate from thrift
 import thryft.main
 from thryft.generators.py.py_generator import PyGenerator
+from thryft.generators.lint.lint_generator import LintGenerator
 
 
 class Main(thryft.main.Main):
@@ -64,7 +65,10 @@ class Main(thryft.main.Main):
                     'thrift_file_path': thrift_file_path
                 }
 
-                self._compile_thrift_file(generator=None, out=None, **compile_kwds)
+                self._compile_thrift_file(
+                    generator=LintGenerator(),
+                    **compile_kwds
+                )
 
                 self._compile_thrift_file(
                     generator=PyGenerator(),
