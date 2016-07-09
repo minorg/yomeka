@@ -3,6 +3,7 @@
 	<name>yomeka-py</name>
 	<comment></comment>
 	<projects>
+		<project>thryft-compiler</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
