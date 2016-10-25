@@ -56,6 +56,10 @@ class OmekaElementText(object):
             :type element: yomeka.api.omeka_element.OmekaElement
             '''
 
+            if element is None:
+                raise ValueError('element is required')
+            if not isinstance(element, yomeka.api.omeka_element.OmekaElement):
+                raise TypeError("expected element to be a yomeka.api.omeka_element.OmekaElement but it is a %s" % getattr(__builtin__, 'type')(element))
             self.__element = element
             return self
 
@@ -64,6 +68,10 @@ class OmekaElementText(object):
             :type element_set: yomeka.api.omeka_element_set.OmekaElementSet
             '''
 
+            if element_set is None:
+                raise ValueError('element_set is required')
+            if not isinstance(element_set, yomeka.api.omeka_element_set.OmekaElementSet):
+                raise TypeError("expected element_set to be a yomeka.api.omeka_element_set.OmekaElementSet but it is a %s" % getattr(__builtin__, 'type')(element_set))
             self.__element_set = element_set
             return self
 
@@ -72,6 +80,10 @@ class OmekaElementText(object):
             :type html: bool
             '''
 
+            if html is None:
+                raise ValueError('html is required')
+            if not isinstance(html, bool):
+                raise TypeError("expected html to be a bool but it is a %s" % getattr(__builtin__, 'type')(html))
             self.__html = html
             return self
 
@@ -80,6 +92,10 @@ class OmekaElementText(object):
             :type text: str
             '''
 
+            if text is None:
+                raise ValueError('text is required')
+            if not isinstance(text, basestring):
+                raise TypeError("expected text to be a str but it is a %s" % getattr(__builtin__, 'type')(text))
             self.__text = text
             return self
 
@@ -143,6 +159,38 @@ class OmekaElementText(object):
 
             self.set_text(text)
 
+    class FieldMetadata(object):
+        ELEMENT = None
+        ELEMENT_SET = None
+        HTML = None
+        TEXT = None
+
+        def __init__(self, name, type_, validation):
+            object.__init__(self)
+            self.__name = name
+            self.__type = type_
+            self.__validation = validation
+
+        def __repr__(self):
+            return self.__name
+
+        @property
+        def type(self):
+            return self.__type
+
+        @property
+        def validation(self):
+            return self.__validation
+
+        @classmethod
+        def values(cls):
+            return (cls.ELEMENT, cls.ELEMENT_SET, cls.HTML, cls.TEXT,)
+
+    FieldMetadata.ELEMENT = FieldMetadata('element', yomeka.api.omeka_element.OmekaElement, None)
+    FieldMetadata.ELEMENT_SET = FieldMetadata('element_set', yomeka.api.omeka_element_set.OmekaElementSet, None)
+    FieldMetadata.HTML = FieldMetadata('html', bool, None)
+    FieldMetadata.TEXT = FieldMetadata('text', str, None)
+
     def __init__(
         self,
         element,
@@ -196,7 +244,7 @@ class OmekaElementText(object):
         return hash((self.element,self.element_set,self.html,self.text,))
 
     def __iter__(self):
-        return iter(self.as_tuple())
+        return iter((self.element, self.element_set, self.html, self.text,))
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -216,24 +264,6 @@ class OmekaElementText(object):
         field_reprs.append('html=' + repr(self.html))
         field_reprs.append('text=' + "'" + self.text.encode('ascii', 'replace') + "'")
         return 'OmekaElementText(' + ', '.join(field_reprs) + ')'
-
-    def as_dict(self):
-        '''
-        Return the fields of this object as a dictionary.
-
-        :rtype: dict
-        '''
-
-        return {'element': self.element, 'element_set': self.element_set, 'html': self.html, 'text': self.text}
-
-    def as_tuple(self):
-        '''
-        Return the fields of this object in declaration order as a tuple.
-
-        :rtype: tuple
-        '''
-
-        return (self.element, self.element_set, self.html, self.text,)
 
     @property
     def element(self):

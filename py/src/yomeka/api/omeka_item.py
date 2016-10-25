@@ -1,6 +1,6 @@
-from datetime import datetime
 from itertools import ifilterfalse
 import __builtin__
+import datetime
 import yomeka.api.omeka_element_text
 import yomeka.api.omeka_item_type
 import yomeka.api.omeka_tag
@@ -23,12 +23,12 @@ class OmekaItem(object):
             json=None,
         ):
             '''
-            :type added: datetime
+            :type added: datetime.datetime
             :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
             :type featured: bool
             :type files_count: int
             :type id: int
-            :type modified: datetime
+            :type modified: datetime.datetime
             :type public: bool
             :type tags: tuple(yomeka.api.omeka_tag.OmekaTag)
             :type url: str
@@ -54,7 +54,7 @@ class OmekaItem(object):
         @property
         def added(self):
             '''
-            :rtype: datetime
+            :rtype: datetime.datetime
             '''
 
             return self.__added
@@ -110,7 +110,7 @@ class OmekaItem(object):
         @property
         def modified(self):
             '''
-            :rtype: datetime
+            :rtype: datetime.datetime
             '''
 
             return self.__modified
@@ -125,9 +125,13 @@ class OmekaItem(object):
 
         def set_added(self, added):
             '''
-            :type added: datetime
+            :type added: datetime.datetime
             '''
 
+            if added is None:
+                raise ValueError('added is required')
+            if not isinstance(added, datetime.datetime):
+                raise TypeError("expected added to be a datetime.datetime but it is a %s" % getattr(__builtin__, 'type')(added))
             self.__added = added
             return self
 
@@ -136,6 +140,10 @@ class OmekaItem(object):
             :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
             '''
 
+            if element_texts is None:
+                raise ValueError('element_texts is required')
+            if not (isinstance(element_texts, tuple) and len(list(ifilterfalse(lambda _: isinstance(_, yomeka.api.omeka_element_text.OmekaElementText), element_texts))) == 0):
+                raise TypeError("expected element_texts to be a tuple(yomeka.api.omeka_element_text.OmekaElementText) but it is a %s" % getattr(__builtin__, 'type')(element_texts))
             self.__element_texts = element_texts
             return self
 
@@ -144,6 +152,10 @@ class OmekaItem(object):
             :type featured: bool
             '''
 
+            if featured is None:
+                raise ValueError('featured is required')
+            if not isinstance(featured, bool):
+                raise TypeError("expected featured to be a bool but it is a %s" % getattr(__builtin__, 'type')(featured))
             self.__featured = featured
             return self
 
@@ -152,6 +164,10 @@ class OmekaItem(object):
             :type files_count: int
             '''
 
+            if files_count is None:
+                raise ValueError('files_count is required')
+            if not isinstance(files_count, int):
+                raise TypeError("expected files_count to be a int but it is a %s" % getattr(__builtin__, 'type')(files_count))
             self.__files_count = files_count
             return self
 
@@ -160,6 +176,10 @@ class OmekaItem(object):
             :type id: int
             '''
 
+            if id is None:
+                raise ValueError('id is required')
+            if not isinstance(id, int):
+                raise TypeError("expected id to be a int but it is a %s" % getattr(__builtin__, 'type')(id))
             self.__id = id
             return self
 
@@ -168,6 +188,9 @@ class OmekaItem(object):
             :type item_type: yomeka.api.omeka_item_type.OmekaItemType or None
             '''
 
+            if item_type is not None:
+                if not isinstance(item_type, yomeka.api.omeka_item_type.OmekaItemType):
+                    raise TypeError("expected item_type to be a yomeka.api.omeka_item_type.OmekaItemType but it is a %s" % getattr(__builtin__, 'type')(item_type))
             self.__item_type = item_type
             return self
 
@@ -176,14 +199,23 @@ class OmekaItem(object):
             :type json: str or None
             '''
 
+            if json is not None:
+                if not isinstance(json, basestring):
+                    raise TypeError("expected json to be a str but it is a %s" % getattr(__builtin__, 'type')(json))
+                if len(json) < 1:
+                    raise ValueError("expected len(json) to be >= 1, was %d" % len(json))
             self.__json = json
             return self
 
         def set_modified(self, modified):
             '''
-            :type modified: datetime
+            :type modified: datetime.datetime
             '''
 
+            if modified is None:
+                raise ValueError('modified is required')
+            if not isinstance(modified, datetime.datetime):
+                raise TypeError("expected modified to be a datetime.datetime but it is a %s" % getattr(__builtin__, 'type')(modified))
             self.__modified = modified
             return self
 
@@ -192,6 +224,10 @@ class OmekaItem(object):
             :type public: bool
             '''
 
+            if public is None:
+                raise ValueError('public is required')
+            if not isinstance(public, bool):
+                raise TypeError("expected public to be a bool but it is a %s" % getattr(__builtin__, 'type')(public))
             self.__public = public
             return self
 
@@ -200,6 +236,10 @@ class OmekaItem(object):
             :type tags: tuple(yomeka.api.omeka_tag.OmekaTag)
             '''
 
+            if tags is None:
+                raise ValueError('tags is required')
+            if not (isinstance(tags, tuple) and len(list(ifilterfalse(lambda _: isinstance(_, yomeka.api.omeka_tag.OmekaTag), tags))) == 0):
+                raise TypeError("expected tags to be a tuple(yomeka.api.omeka_tag.OmekaTag) but it is a %s" % getattr(__builtin__, 'type')(tags))
             self.__tags = tags
             return self
 
@@ -208,6 +248,10 @@ class OmekaItem(object):
             :type url: str
             '''
 
+            if url is None:
+                raise ValueError('url is required')
+            if not isinstance(url, basestring):
+                raise TypeError("expected url to be a str but it is a %s" % getattr(__builtin__, 'type')(url))
             self.__url = url
             return self
 
@@ -221,12 +265,12 @@ class OmekaItem(object):
 
         def update(self, omeka_item):
             '''
-            :type added: datetime
+            :type added: datetime.datetime
             :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
             :type featured: bool
             :type files_count: int
             :type id: int
-            :type modified: datetime
+            :type modified: datetime.datetime
             :type public: bool
             :type tags: tuple(yomeka.api.omeka_tag.OmekaTag)
             :type url: str
@@ -264,7 +308,7 @@ class OmekaItem(object):
         @added.setter
         def added(self, added):
             '''
-            :type added: datetime
+            :type added: datetime.datetime
             '''
 
             self.set_added(added)
@@ -320,7 +364,7 @@ class OmekaItem(object):
         @modified.setter
         def modified(self, modified):
             '''
-            :type modified: datetime
+            :type modified: datetime.datetime
             '''
 
             self.set_modified(modified)
@@ -349,6 +393,52 @@ class OmekaItem(object):
 
             self.set_url(url)
 
+    class FieldMetadata(object):
+        ADDED = None
+        ELEMENT_TEXTS = None
+        FEATURED = None
+        FILES_COUNT = None
+        ID = None
+        MODIFIED = None
+        PUBLIC = None
+        TAGS = None
+        URL = None
+        ITEM_TYPE = None
+        JSON = None
+
+        def __init__(self, name, type_, validation):
+            object.__init__(self)
+            self.__name = name
+            self.__type = type_
+            self.__validation = validation
+
+        def __repr__(self):
+            return self.__name
+
+        @property
+        def type(self):
+            return self.__type
+
+        @property
+        def validation(self):
+            return self.__validation
+
+        @classmethod
+        def values(cls):
+            return (cls.ADDED, cls.ELEMENT_TEXTS, cls.FEATURED, cls.FILES_COUNT, cls.ID, cls.MODIFIED, cls.PUBLIC, cls.TAGS, cls.URL, cls.ITEM_TYPE, cls.JSON,)
+
+    FieldMetadata.ADDED = FieldMetadata('added', datetime.datetime, None)
+    FieldMetadata.ELEMENT_TEXTS = FieldMetadata('element_texts', tuple, None)
+    FieldMetadata.FEATURED = FieldMetadata('featured', bool, None)
+    FieldMetadata.FILES_COUNT = FieldMetadata('files_count', int, None)
+    FieldMetadata.ID = FieldMetadata('id', int, None)
+    FieldMetadata.MODIFIED = FieldMetadata('modified', datetime.datetime, None)
+    FieldMetadata.PUBLIC = FieldMetadata('public', bool, None)
+    FieldMetadata.TAGS = FieldMetadata('tags', tuple, None)
+    FieldMetadata.URL = FieldMetadata('url', str, None)
+    FieldMetadata.ITEM_TYPE = FieldMetadata('item_type', yomeka.api.omeka_item_type.OmekaItemType, None)
+    FieldMetadata.JSON = FieldMetadata('json', str, {u'minLength': 1})
+
     def __init__(
         self,
         added,
@@ -364,12 +454,12 @@ class OmekaItem(object):
         json=None,
     ):
         '''
-        :type added: datetime
+        :type added: datetime.datetime
         :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
         :type featured: bool
         :type files_count: int
         :type id: int
-        :type modified: datetime
+        :type modified: datetime.datetime
         :type public: bool
         :type tags: tuple(yomeka.api.omeka_tag.OmekaTag)
         :type url: str
@@ -379,8 +469,8 @@ class OmekaItem(object):
 
         if added is None:
             raise ValueError('added is required')
-        if not isinstance(added, datetime):
-            raise TypeError("expected added to be a datetime but it is a %s" % getattr(__builtin__, 'type')(added))
+        if not isinstance(added, datetime.datetime):
+            raise TypeError("expected added to be a datetime.datetime but it is a %s" % getattr(__builtin__, 'type')(added))
         self.__added = added
 
         if element_texts is None:
@@ -397,7 +487,7 @@ class OmekaItem(object):
 
         if files_count is None:
             raise ValueError('files_count is required')
-        if not isinstance(files_count, (int, long)) and files_count >= 0:
+        if not isinstance(files_count, int):
             raise TypeError("expected files_count to be a int but it is a %s" % getattr(__builtin__, 'type')(files_count))
         self.__files_count = files_count
 
@@ -409,8 +499,8 @@ class OmekaItem(object):
 
         if modified is None:
             raise ValueError('modified is required')
-        if not isinstance(modified, datetime):
-            raise TypeError("expected modified to be a datetime but it is a %s" % getattr(__builtin__, 'type')(modified))
+        if not isinstance(modified, datetime.datetime):
+            raise TypeError("expected modified to be a datetime.datetime but it is a %s" % getattr(__builtin__, 'type')(modified))
         self.__modified = modified
 
         if public is None:
@@ -472,7 +562,7 @@ class OmekaItem(object):
         return hash((self.added,self.element_texts,self.featured,self.files_count,self.id,self.modified,self.public,self.tags,self.url,self.item_type,self.json,))
 
     def __iter__(self):
-        return iter(self.as_tuple())
+        return iter((self.added, self.element_texts, self.featured, self.files_count, self.id, self.modified, self.public, self.tags, self.url, self.item_type, self.json,))
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -514,28 +604,10 @@ class OmekaItem(object):
     @property
     def added(self):
         '''
-        :rtype: datetime
+        :rtype: datetime.datetime
         '''
 
         return self.__added
-
-    def as_dict(self):
-        '''
-        Return the fields of this object as a dictionary.
-
-        :rtype: dict
-        '''
-
-        return {'added': self.added, 'element_texts': self.element_texts, 'featured': self.featured, 'files_count': self.files_count, 'id': self.id, 'modified': self.modified, 'public': self.public, 'tags': self.tags, 'url': self.url, 'item_type': self.item_type, 'json': self.json}
-
-    def as_tuple(self):
-        '''
-        Return the fields of this object in declaration order as a tuple.
-
-        :rtype: tuple
-        '''
-
-        return (self.added, self.element_texts, self.featured, self.files_count, self.id, self.modified, self.public, self.tags, self.url, self.item_type, self.json,)
 
     @property
     def element_texts(self):
@@ -588,7 +660,7 @@ class OmekaItem(object):
     @property
     def modified(self):
         '''
-        :rtype: datetime
+        :rtype: datetime.datetime
         '''
 
         return self.__modified
@@ -624,7 +696,7 @@ class OmekaItem(object):
             elif ifield_name == 'featured':
                 init_kwds['featured'] = iprot.read_bool()
             elif ifield_name == 'files_count':
-                init_kwds['files_count'] = iprot.read_u32()
+                init_kwds['files_count'] = iprot.read_i32()
             elif ifield_name == 'id':
                 init_kwds['id'] = iprot.read_i32()
             elif ifield_name == 'modified':
@@ -664,12 +736,12 @@ class OmekaItem(object):
         '''
         Copy this object, replace one or more fields, and return the copy.
 
-        :type added: datetime or None
+        :type added: datetime.datetime or None
         :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText) or None
         :type featured: bool or None
         :type files_count: int or None
         :type id: int or None
-        :type modified: datetime or None
+        :type modified: datetime.datetime or None
         :type public: bool or None
         :type tags: tuple(yomeka.api.omeka_tag.OmekaTag) or None
         :type url: str or None
@@ -744,7 +816,7 @@ class OmekaItem(object):
         oprot.write_field_end()
 
         oprot.write_field_begin(name='files_count', type=8, id=None)
-        oprot.write_u32(self.files_count)
+        oprot.write_i32(self.files_count)
         oprot.write_field_end()
 
         oprot.write_field_begin(name='id', type=8, id=None)

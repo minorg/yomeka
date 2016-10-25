@@ -1,7 +1,6 @@
 namespace * yomeka.api
 
 include "thryft/native/date_time.thrift"
-include "thryft/native/u32.thrift"
 include "thryft/native/url.thrift"
 include "yomeka/api/omeka_element_text.thrift"
 include "yomeka/api/omeka_file_urls.thrift"
@@ -20,7 +19,7 @@ struct OmekaFile {
 	date_time.DateTime modified;
 	// @validation {"minLength": 1}
 	string original_filename;
-	u32.u32 size;
+	i32 size;
     bool stored;
 	// @validation {"minLength": 1}
 	string type_os;

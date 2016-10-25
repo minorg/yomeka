@@ -1,17 +1,16 @@
 namespace * yomeka.api
 
+include "thryft/native/date_time.thrift"
+include "thryft/native/url.thrift"
 include "yomeka/api/omeka_element_text.thrift"
 include "yomeka/api/omeka_item_type.thrift"
 include "yomeka/api/omeka_tag.thrift"
-include "thryft/native/date_time.thrift"
-include "thryft/native/u32.thrift"
-include "thryft/native/url.thrift"
 
 struct OmekaItem {
 	date_time.DateTime added;
 	list<omeka_element_text.OmekaElementText> element_texts;
     bool featured;
-	u32.u32 files_count;
+	i32 files_count;
 	i32 id;
 	date_time.DateTime modified;
 	bool public;

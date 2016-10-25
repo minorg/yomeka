@@ -29,6 +29,10 @@ class IoException(Exception):
             :type cause_message: str
             '''
 
+            if cause_message is None:
+                raise ValueError('cause_message is required')
+            if not isinstance(cause_message, basestring):
+                raise TypeError("expected cause_message to be a str but it is a %s" % getattr(__builtin__, 'type')(cause_message))
             self.__cause_message = cause_message
             return self
 
@@ -54,6 +58,32 @@ class IoException(Exception):
 
             self.set_cause_message(cause_message)
 
+    class FieldMetadata(object):
+        CAUSE_MESSAGE = None
+
+        def __init__(self, name, type_, validation):
+            object.__init__(self)
+            self.__name = name
+            self.__type = type_
+            self.__validation = validation
+
+        def __repr__(self):
+            return self.__name
+
+        @property
+        def type(self):
+            return self.__type
+
+        @property
+        def validation(self):
+            return self.__validation
+
+        @classmethod
+        def values(cls):
+            return (cls.CAUSE_MESSAGE,)
+
+    FieldMetadata.CAUSE_MESSAGE = FieldMetadata('cause_message', str, None)
+
     def __init__(
         self,
         cause_message,
@@ -77,7 +107,7 @@ class IoException(Exception):
         return hash(self.cause_message)
 
     def __iter__(self):
-        return iter(self.as_tuple())
+        return iter((self.cause_message,))
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -91,24 +121,6 @@ class IoException(Exception):
         field_reprs = []
         field_reprs.append('cause_message=' + "'" + self.cause_message.encode('ascii', 'replace') + "'")
         return 'IoException(' + ', '.join(field_reprs) + ')'
-
-    def as_dict(self):
-        '''
-        Return the fields of this object as a dictionary.
-
-        :rtype: dict
-        '''
-
-        return {'cause_message': self.cause_message}
-
-    def as_tuple(self):
-        '''
-        Return the fields of this object in declaration order as a tuple.
-
-        :rtype: tuple
-        '''
-
-        return (self.cause_message,)
 
     @property
     def cause_message(self):

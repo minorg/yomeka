@@ -43,6 +43,10 @@ class OmekaItemType(object):
             :type id: int
             '''
 
+            if id is None:
+                raise ValueError('id is required')
+            if not isinstance(id, int):
+                raise TypeError("expected id to be a int but it is a %s" % getattr(__builtin__, 'type')(id))
             self.__id = id
             return self
 
@@ -51,6 +55,12 @@ class OmekaItemType(object):
             :type name: str
             '''
 
+            if name is None:
+                raise ValueError('name is required')
+            if not isinstance(name, basestring):
+                raise TypeError("expected name to be a str but it is a %s" % getattr(__builtin__, 'type')(name))
+            if len(name) < 1:
+                raise ValueError("expected len(name) to be >= 1, was %d" % len(name))
             self.__name = name
             return self
 
@@ -59,6 +69,10 @@ class OmekaItemType(object):
             :type url: str
             '''
 
+            if url is None:
+                raise ValueError('url is required')
+            if not isinstance(url, basestring):
+                raise TypeError("expected url to be a str but it is a %s" % getattr(__builtin__, 'type')(url))
             self.__url = url
             return self
 
@@ -112,6 +126,36 @@ class OmekaItemType(object):
 
             self.set_url(url)
 
+    class FieldMetadata(object):
+        ID = None
+        NAME = None
+        URL = None
+
+        def __init__(self, name, type_, validation):
+            object.__init__(self)
+            self.__name = name
+            self.__type = type_
+            self.__validation = validation
+
+        def __repr__(self):
+            return self.__name
+
+        @property
+        def type(self):
+            return self.__type
+
+        @property
+        def validation(self):
+            return self.__validation
+
+        @classmethod
+        def values(cls):
+            return (cls.ID, cls.NAME, cls.URL,)
+
+    FieldMetadata.ID = FieldMetadata('id', int, None)
+    FieldMetadata.NAME = FieldMetadata('name', str, {u'minLength': 1})
+    FieldMetadata.URL = FieldMetadata('url', str, None)
+
     def __init__(
         self,
         id,  # @ReservedAssignment
@@ -157,7 +201,7 @@ class OmekaItemType(object):
         return hash((self.id,self.name,self.url,))
 
     def __iter__(self):
-        return iter(self.as_tuple())
+        return iter((self.id, self.name, self.url,))
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -175,24 +219,6 @@ class OmekaItemType(object):
         field_reprs.append('name=' + "'" + self.name.encode('ascii', 'replace') + "'")
         field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace') + "'")
         return 'OmekaItemType(' + ', '.join(field_reprs) + ')'
-
-    def as_dict(self):
-        '''
-        Return the fields of this object as a dictionary.
-
-        :rtype: dict
-        '''
-
-        return {'id': self.id, 'name': self.name, 'url': self.url}
-
-    def as_tuple(self):
-        '''
-        Return the fields of this object in declaration order as a tuple.
-
-        :rtype: tuple
-        '''
-
-        return (self.id, self.name, self.url,)
 
     @property
     def id(self):  # @ReservedAssignment

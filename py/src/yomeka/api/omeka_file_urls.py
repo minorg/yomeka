@@ -46,6 +46,9 @@ class OmekaFileUrls(object):
             :type fullsize: str or None
             '''
 
+            if fullsize is not None:
+                if not isinstance(fullsize, basestring):
+                    raise TypeError("expected fullsize to be a str but it is a %s" % getattr(__builtin__, 'type')(fullsize))
             self.__fullsize = fullsize
             return self
 
@@ -54,6 +57,10 @@ class OmekaFileUrls(object):
             :type original: str
             '''
 
+            if original is None:
+                raise ValueError('original is required')
+            if not isinstance(original, basestring):
+                raise TypeError("expected original to be a str but it is a %s" % getattr(__builtin__, 'type')(original))
             self.__original = original
             return self
 
@@ -62,6 +69,9 @@ class OmekaFileUrls(object):
             :type square_thumbnail: str or None
             '''
 
+            if square_thumbnail is not None:
+                if not isinstance(square_thumbnail, basestring):
+                    raise TypeError("expected square_thumbnail to be a str but it is a %s" % getattr(__builtin__, 'type')(square_thumbnail))
             self.__square_thumbnail = square_thumbnail
             return self
 
@@ -70,6 +80,9 @@ class OmekaFileUrls(object):
             :type thumbnail: str or None
             '''
 
+            if thumbnail is not None:
+                if not isinstance(thumbnail, basestring):
+                    raise TypeError("expected thumbnail to be a str but it is a %s" % getattr(__builtin__, 'type')(thumbnail))
             self.__thumbnail = thumbnail
             return self
 
@@ -141,6 +154,38 @@ class OmekaFileUrls(object):
 
             self.set_thumbnail(thumbnail)
 
+    class FieldMetadata(object):
+        ORIGINAL = None
+        FULLSIZE = None
+        SQUARE_THUMBNAIL = None
+        THUMBNAIL = None
+
+        def __init__(self, name, type_, validation):
+            object.__init__(self)
+            self.__name = name
+            self.__type = type_
+            self.__validation = validation
+
+        def __repr__(self):
+            return self.__name
+
+        @property
+        def type(self):
+            return self.__type
+
+        @property
+        def validation(self):
+            return self.__validation
+
+        @classmethod
+        def values(cls):
+            return (cls.ORIGINAL, cls.FULLSIZE, cls.SQUARE_THUMBNAIL, cls.THUMBNAIL,)
+
+    FieldMetadata.ORIGINAL = FieldMetadata('original', str, None)
+    FieldMetadata.FULLSIZE = FieldMetadata('fullsize', str, None)
+    FieldMetadata.SQUARE_THUMBNAIL = FieldMetadata('square_thumbnail', str, None)
+    FieldMetadata.THUMBNAIL = FieldMetadata('thumbnail', str, None)
+
     def __init__(
         self,
         original,
@@ -191,7 +236,7 @@ class OmekaFileUrls(object):
         return hash((self.original,self.fullsize,self.square_thumbnail,self.thumbnail,))
 
     def __iter__(self):
-        return iter(self.as_tuple())
+        return iter((self.original, self.fullsize, self.square_thumbnail, self.thumbnail,))
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -217,24 +262,6 @@ class OmekaFileUrls(object):
         if self.thumbnail is not None:
             field_reprs.append('thumbnail=' + "'" + self.thumbnail.encode('ascii', 'replace') + "'")
         return 'OmekaFileUrls(' + ', '.join(field_reprs) + ')'
-
-    def as_dict(self):
-        '''
-        Return the fields of this object as a dictionary.
-
-        :rtype: dict
-        '''
-
-        return {'original': self.original, 'fullsize': self.fullsize, 'square_thumbnail': self.square_thumbnail, 'thumbnail': self.thumbnail}
-
-    def as_tuple(self):
-        '''
-        Return the fields of this object in declaration order as a tuple.
-
-        :rtype: tuple
-        '''
-
-        return (self.original, self.fullsize, self.square_thumbnail, self.thumbnail,)
 
     @property
     def fullsize(self):
