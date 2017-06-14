@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import csv
 import os.path
@@ -7,7 +9,7 @@ import sys
 try:
     __import__('yomeka')
 except ImportError:
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__)), '..', 'src'))
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
     __import__('yomeka')
 
 from yomeka.client.omeka_rest_api_client import OmekaRestApiClient
