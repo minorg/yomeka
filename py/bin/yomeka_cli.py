@@ -37,7 +37,6 @@ class YomekaCli(object):
         argument_parser = argparse.ArgumentParser()
         argument_parser.add_argument('--api-key', required=True)
         argument_parser.add_argument('--endpoint-url', required=True)
-        argument_parser.add_argument('--items')
         argument_parser.add_argument('--format', default='csv')
         argument_parser.add_argument('-o', '--output-file')
 
