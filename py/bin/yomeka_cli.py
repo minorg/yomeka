@@ -61,22 +61,6 @@ class YomekaCli(object):
         getattr(inst, '_' + args.command + '_command')()
 
     def __print_items(self, items):
-#     date_time.DateTime added;
-#     list<omeka_element_text.OmekaElementText> element_texts;
-#     bool featured;
-#     i32 files_count;
-#     i32 id;
-#     date_time.DateTime modified;
-#     bool public;
-#     list<omeka_tag.OmekaTag> tags;
-#     url.Url url;
-#
-#     optional omeka_item_type.OmekaItemType item_type;
-#
-#     // JSON representation of this item
-#     // @validation {"minLength": 1}
-#     optional string json;
-
         if self.__args.format != 'csv':
             raise NotImplementedError(self.__args.format)
 
