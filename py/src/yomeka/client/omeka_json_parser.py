@@ -101,7 +101,7 @@ class OmekaJsonParser(object):
     def parse_item_dict(self, item_dict):
         element_texts = self.__parse_element_texts(item_dict.get('element_texts', []))
 
-        item_type_dict = item_dict['item_type']
+        item_type_dict = item_dict.get('item_type')
         if item_type_dict is not None:
             item_type = \
                 OmekaItemType.Builder()\
