@@ -1,4 +1,4 @@
-import __builtin__
+import builtins
 import yomeka.api.omeka_element
 import yomeka.api.omeka_element_set
 
@@ -12,13 +12,6 @@ class OmekaElementText(object):
             html=None,
             text=None,
         ):
-            '''
-            :type element: yomeka.api.omeka_element.OmekaElement
-            :type element_set: yomeka.api.omeka_element_set.OmekaElementSet
-            :type html: bool
-            :type text: str
-            '''
-
             self.__element = element
             self.__element_set = element_set
             self.__html = html
@@ -28,135 +21,94 @@ class OmekaElementText(object):
             return OmekaElementText(element=self.__element, element_set=self.__element_set, html=self.__html, text=self.__text)
 
         @property
-        def element(self):
-            '''
-            :rtype: yomeka.api.omeka_element.OmekaElement
-            '''
-
+        def element(self) -> yomeka.api.omeka_element.OmekaElement:
             return self.__element
 
         @property
-        def element_set(self):
-            '''
-            :rtype: yomeka.api.omeka_element_set.OmekaElementSet
-            '''
-
+        def element_set(self) -> yomeka.api.omeka_element_set.OmekaElementSet:
             return self.__element_set
 
-        @property
-        def html(self):
+        @classmethod
+        def from_template(cls, template):
             '''
-            :rtype: bool
+            :type template: yomeka.api.omeka_element_text.OmekaElementText
+            :rtype: yomeka.api.omeka_element_text.OmekaElementText
             '''
 
+            builder = cls()
+            builder.element = template.element
+            builder.element_set = template.element_set
+            builder.html = template.html
+            builder.text = template.text
+            return builder
+
+        @property
+        def html(self) -> bool:
             return self.__html
 
-        def set_element(self, element):
-            '''
-            :type element: yomeka.api.omeka_element.OmekaElement
-            '''
-
+        def set_element(self, element: yomeka.api.omeka_element.OmekaElement):
             if element is None:
                 raise ValueError('element is required')
             if not isinstance(element, yomeka.api.omeka_element.OmekaElement):
-                raise TypeError("expected element to be a yomeka.api.omeka_element.OmekaElement but it is a %s" % getattr(__builtin__, 'type')(element))
+                raise TypeError("expected element to be a yomeka.api.omeka_element.OmekaElement but it is a %s" % builtins.type(element))
             self.__element = element
             return self
 
-        def set_element_set(self, element_set):
-            '''
-            :type element_set: yomeka.api.omeka_element_set.OmekaElementSet
-            '''
-
+        def set_element_set(self, element_set: yomeka.api.omeka_element_set.OmekaElementSet):
             if element_set is None:
                 raise ValueError('element_set is required')
             if not isinstance(element_set, yomeka.api.omeka_element_set.OmekaElementSet):
-                raise TypeError("expected element_set to be a yomeka.api.omeka_element_set.OmekaElementSet but it is a %s" % getattr(__builtin__, 'type')(element_set))
+                raise TypeError("expected element_set to be a yomeka.api.omeka_element_set.OmekaElementSet but it is a %s" % builtins.type(element_set))
             self.__element_set = element_set
             return self
 
-        def set_html(self, html):
-            '''
-            :type html: bool
-            '''
-
+        def set_html(self, html: bool):
             if html is None:
                 raise ValueError('html is required')
             if not isinstance(html, bool):
-                raise TypeError("expected html to be a bool but it is a %s" % getattr(__builtin__, 'type')(html))
+                raise TypeError("expected html to be a bool but it is a %s" % builtins.type(html))
             self.__html = html
             return self
 
-        def set_text(self, text):
-            '''
-            :type text: str
-            '''
-
+        def set_text(self, text: str):
             if text is None:
                 raise ValueError('text is required')
-            if not isinstance(text, basestring):
-                raise TypeError("expected text to be a str but it is a %s" % getattr(__builtin__, 'type')(text))
+            if not isinstance(text, str):
+                raise TypeError("expected text to be a str but it is a %s" % builtins.type(text))
             self.__text = text
             return self
 
         @property
-        def text(self):
-            '''
-            :rtype: str
-            '''
-
+        def text(self) -> str:
             return self.__text
 
         def update(self, omeka_element_text):
-            '''
-            :type element: yomeka.api.omeka_element.OmekaElement
-            :type element_set: yomeka.api.omeka_element_set.OmekaElementSet
-            :type html: bool
-            :type text: str
-            '''
-
             if isinstance(omeka_element_text, OmekaElementText):
                 self.set_element(omeka_element_text.element)
                 self.set_element_set(omeka_element_text.element_set)
                 self.set_html(omeka_element_text.html)
                 self.set_text(omeka_element_text.text)
             elif isinstance(omeka_element_text, dict):
-                for key, value in omeka_element_text.iteritems():
+                for key, value in omeka_element_text.items():
                     getattr(self, 'set_' + key)(value)
             else:
                 raise TypeError(omeka_element_text)
             return self
 
         @element.setter
-        def element(self, element):
-            '''
-            :type element: yomeka.api.omeka_element.OmekaElement
-            '''
-
+        def element(self, element: yomeka.api.omeka_element.OmekaElement) -> None:
             self.set_element(element)
 
         @element_set.setter
-        def element_set(self, element_set):
-            '''
-            :type element_set: yomeka.api.omeka_element_set.OmekaElementSet
-            '''
-
+        def element_set(self, element_set: yomeka.api.omeka_element_set.OmekaElementSet) -> None:
             self.set_element_set(element_set)
 
         @html.setter
-        def html(self, html):
-            '''
-            :type html: bool
-            '''
-
+        def html(self, html: bool) -> None:
             self.set_html(html)
 
         @text.setter
-        def text(self, text):
-            '''
-            :type text: str
-            '''
-
+        def text(self, text: str) -> None:
             self.set_text(text)
 
     class FieldMetadata(object):
@@ -200,40 +152,33 @@ class OmekaElementText(object):
 
     def __init__(
         self,
-        element,
-        element_set,
-        html,
-        text,
+        element: yomeka.api.omeka_element.OmekaElement,
+        element_set: yomeka.api.omeka_element_set.OmekaElementSet,
+        html: bool,
+        text: str,
     ):
-        '''
-        :type element: yomeka.api.omeka_element.OmekaElement
-        :type element_set: yomeka.api.omeka_element_set.OmekaElementSet
-        :type html: bool
-        :type text: str
-        '''
-
         if element is None:
             raise ValueError('element is required')
         if not isinstance(element, yomeka.api.omeka_element.OmekaElement):
-            raise TypeError("expected element to be a yomeka.api.omeka_element.OmekaElement but it is a %s" % getattr(__builtin__, 'type')(element))
+            raise TypeError("expected element to be a yomeka.api.omeka_element.OmekaElement but it is a %s" % builtins.type(element))
         self.__element = element
 
         if element_set is None:
             raise ValueError('element_set is required')
         if not isinstance(element_set, yomeka.api.omeka_element_set.OmekaElementSet):
-            raise TypeError("expected element_set to be a yomeka.api.omeka_element_set.OmekaElementSet but it is a %s" % getattr(__builtin__, 'type')(element_set))
+            raise TypeError("expected element_set to be a yomeka.api.omeka_element_set.OmekaElementSet but it is a %s" % builtins.type(element_set))
         self.__element_set = element_set
 
         if html is None:
             raise ValueError('html is required')
         if not isinstance(html, bool):
-            raise TypeError("expected html to be a bool but it is a %s" % getattr(__builtin__, 'type')(html))
+            raise TypeError("expected html to be a bool but it is a %s" % builtins.type(html))
         self.__html = html
 
         if text is None:
             raise ValueError('text is required')
-        if not isinstance(text, basestring):
-            raise TypeError("expected text to be a str but it is a %s" % getattr(__builtin__, 'type')(text))
+        if not isinstance(text, str):
+            raise TypeError("expected text to be a str but it is a %s" % builtins.type(text))
         self.__text = text
 
     def __eq__(self, other):
@@ -248,7 +193,7 @@ class OmekaElementText(object):
         return True
 
     def __hash__(self):
-        return hash((self.element,self.element_set,self.html,self.text,))
+        return hash((self.element, self.element_set, self.html, self.text,))
 
     def __iter__(self):
         return iter((self.element, self.element_set, self.html, self.text,))
@@ -261,7 +206,7 @@ class OmekaElementText(object):
         field_reprs.append('element=' + repr(self.element))
         field_reprs.append('element_set=' + repr(self.element_set))
         field_reprs.append('html=' + repr(self.html))
-        field_reprs.append('text=' + "'" + self.text.encode('ascii', 'replace') + "'")
+        field_reprs.append('text=' + "'" + self.text.encode('ascii', 'replace').decode('ascii') + "'")
         return 'OmekaElementText(' + ', '.join(field_reprs) + ')'
 
     def __str__(self):
@@ -269,31 +214,54 @@ class OmekaElementText(object):
         field_reprs.append('element=' + repr(self.element))
         field_reprs.append('element_set=' + repr(self.element_set))
         field_reprs.append('html=' + repr(self.html))
-        field_reprs.append('text=' + "'" + self.text.encode('ascii', 'replace') + "'")
+        field_reprs.append('text=' + "'" + self.text.encode('ascii', 'replace').decode('ascii') + "'")
         return 'OmekaElementText(' + ', '.join(field_reprs) + ')'
 
-    @property
-    def element(self):
-        '''
-        :rtype: yomeka.api.omeka_element.OmekaElement
-        '''
+    @classmethod
+    def builder(cls):
+        return cls.Builder()
 
+    @property
+    def element(self) -> yomeka.api.omeka_element.OmekaElement:
         return self.__element
 
     @property
-    def element_set(self):
-        '''
-        :rtype: yomeka.api.omeka_element_set.OmekaElementSet
-        '''
-
+    def element_set(self) -> yomeka.api.omeka_element_set.OmekaElementSet:
         return self.__element_set
 
-    @property
-    def html(self):
-        '''
-        :rtype: bool
-        '''
+    @classmethod
+    def from_builtins(cls, _dict):
+        if not isinstance(_dict, dict):
+            raise ValueError("expected dict")
 
+        __builder = cls.builder()
+
+        element = _dict.get("element")
+        if element is None:
+            raise KeyError("element")
+        element = yomeka.api.omeka_element.OmekaElement.from_builtins(element)
+        __builder.element = element
+
+        element_set = _dict.get("element_set")
+        if element_set is None:
+            raise KeyError("element_set")
+        element_set = yomeka.api.omeka_element_set.OmekaElementSet.from_builtins(element_set)
+        __builder.element_set = element_set
+
+        html = _dict.get("html")
+        if html is None:
+            raise KeyError("html")
+        __builder.html = html
+
+        text = _dict.get("text")
+        if text is None:
+            raise KeyError("text")
+        __builder.text = text
+
+        return __builder.build()
+
+    @property
+    def html(self) -> bool:
         return self.__html
 
     @classmethod
@@ -310,7 +278,7 @@ class OmekaElementText(object):
         iprot.read_struct_begin()
         while True:
             ifield_name, ifield_type, _ifield_id = iprot.read_field_begin()
-            if ifield_type == 0: # STOP
+            if ifield_type == 0:  # STOP
                 break
             elif ifield_name == 'element':
                 init_kwds['element'] = yomeka.api.omeka_element.OmekaElement.read(iprot)
@@ -325,40 +293,20 @@ class OmekaElementText(object):
 
         return cls(**init_kwds)
 
-    def replace(
-        self,
-        element=None,
-        element_set=None,
-        html=None,
-        text=None,
-    ):
-        '''
-        Copy this object, replace one or more fields, and return the copy.
-
-        :type element: yomeka.api.omeka_element.OmekaElement or None
-        :type element_set: yomeka.api.omeka_element_set.OmekaElementSet or None
-        :type html: bool or None
-        :type text: str or None
-        :rtype: yomeka.api.omeka_element_text.OmekaElementText
-        '''
-
-        if element is None:
-            element = self.element
-        if element_set is None:
-            element_set = self.element_set
-        if html is None:
-            html = self.html
-        if text is None:
-            text = self.text
-        return self.__class__(element=element, element_set=element_set, html=html, text=text)
+    def replacer(self):
+        return self.Builder.from_template(template=self)
 
     @property
-    def text(self):
-        '''
-        :rtype: str
-        '''
-
+    def text(self) -> str:
         return self.__text
+
+    def to_builtins(self):
+        dict_ = {}
+        dict_["element"] = self.element.to_builtins()
+        dict_["element_set"] = self.element_set.to_builtins()
+        dict_["html"] = self.html
+        dict_["text"] = self.text
+        return dict_
 
     def write(self, oprot):
         '''

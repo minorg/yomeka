@@ -1,4 +1,4 @@
-import __builtin__
+import builtins
 
 
 class OmekaElementSet(object):
@@ -9,12 +9,6 @@ class OmekaElementSet(object):
             name=None,
             url=None,
         ):
-            '''
-            :type id: int
-            :type name: str
-            :type url: str
-            '''
-
             self.__id = id
             self.__name = name
             self.__url = url
@@ -22,108 +16,79 @@ class OmekaElementSet(object):
         def build(self):
             return OmekaElementSet(id=self.__id, name=self.__name, url=self.__url)
 
-        @property
-        def id(self):  # @ReservedAssignment
+        @classmethod
+        def from_template(cls, template):
             '''
-            :rtype: int
+            :type template: yomeka.api.omeka_element_set.OmekaElementSet
+            :rtype: yomeka.api.omeka_element_set.OmekaElementSet
             '''
 
+            builder = cls()
+            builder.id = template.id
+            builder.name = template.name
+            builder.url = template.url
+            return builder
+
+        @property
+        def id(self) -> int:  # @ReservedAssignment
             return self.__id
 
         @property
-        def name(self):
-            '''
-            :rtype: str
-            '''
-
+        def name(self) -> str:
             return self.__name
 
-        def set_id(self, id):  # @ReservedAssignment
-            '''
-            :type id: int
-            '''
-
+        def set_id(self, id: int):  # @ReservedAssignment
             if id is None:
                 raise ValueError('id is required')
             if not isinstance(id, int):
-                raise TypeError("expected id to be a int but it is a %s" % getattr(__builtin__, 'type')(id))
+                raise TypeError("expected id to be a int but it is a %s" % builtins.type(id))
             self.__id = id
             return self
 
-        def set_name(self, name):
-            '''
-            :type name: str
-            '''
-
+        def set_name(self, name: str):
             if name is None:
                 raise ValueError('name is required')
-            if not isinstance(name, basestring):
-                raise TypeError("expected name to be a str but it is a %s" % getattr(__builtin__, 'type')(name))
+            if not isinstance(name, str):
+                raise TypeError("expected name to be a str but it is a %s" % builtins.type(name))
             if len(name) < 1:
                 raise ValueError("expected len(name) to be >= 1, was %d" % len(name))
             self.__name = name
             return self
 
-        def set_url(self, url):
-            '''
-            :type url: str
-            '''
-
+        def set_url(self, url: str):
             if url is None:
                 raise ValueError('url is required')
-            if not isinstance(url, basestring):
-                raise TypeError("expected url to be a str but it is a %s" % getattr(__builtin__, 'type')(url))
+            if not isinstance(url, str):
+                raise TypeError("expected url to be a str but it is a %s" % builtins.type(url))
             self.__url = url
             return self
 
         def update(self, omeka_element_set):
-            '''
-            :type id: int
-            :type name: str
-            :type url: str
-            '''
-
             if isinstance(omeka_element_set, OmekaElementSet):
                 self.set_id(omeka_element_set.id)
                 self.set_name(omeka_element_set.name)
                 self.set_url(omeka_element_set.url)
             elif isinstance(omeka_element_set, dict):
-                for key, value in omeka_element_set.iteritems():
+                for key, value in omeka_element_set.items():
                     getattr(self, 'set_' + key)(value)
             else:
                 raise TypeError(omeka_element_set)
             return self
 
         @property
-        def url(self):
-            '''
-            :rtype: str
-            '''
-
+        def url(self) -> str:
             return self.__url
 
         @id.setter
-        def id(self, id):  # @ReservedAssignment
-            '''
-            :type id: int
-            '''
-
+        def id(self, id: int) -> None:  # @ReservedAssignment
             self.set_id(id)
 
         @name.setter
-        def name(self, name):
-            '''
-            :type name: str
-            '''
-
+        def name(self, name: str) -> None:
             self.set_name(name)
 
         @url.setter
-        def url(self, url):
-            '''
-            :type url: str
-            '''
-
+        def url(self, url: str) -> None:
             self.set_url(url)
 
     class FieldMetadata(object):
@@ -160,39 +125,33 @@ class OmekaElementSet(object):
             return (cls.ID, cls.NAME, cls.URL,)
 
     FieldMetadata.ID = FieldMetadata('id', int, None)
-    FieldMetadata.NAME = FieldMetadata('name', str, {u'minLength': 1})
+    FieldMetadata.NAME = FieldMetadata('name', str, {'minLength': 1})
     FieldMetadata.URL = FieldMetadata('url', str, None)
 
     def __init__(
         self,
-        id,  # @ReservedAssignment
-        name,
-        url,
+        id: int,  # @ReservedAssignment
+        name: str,
+        url: str,
     ):
-        '''
-        :type id: int
-        :type name: str
-        :type url: str
-        '''
-
         if id is None:
             raise ValueError('id is required')
         if not isinstance(id, int):
-            raise TypeError("expected id to be a int but it is a %s" % getattr(__builtin__, 'type')(id))
+            raise TypeError("expected id to be a int but it is a %s" % builtins.type(id))
         self.__id = id
 
         if name is None:
             raise ValueError('name is required')
-        if not isinstance(name, basestring):
-            raise TypeError("expected name to be a str but it is a %s" % getattr(__builtin__, 'type')(name))
+        if not isinstance(name, str):
+            raise TypeError("expected name to be a str but it is a %s" % builtins.type(name))
         if len(name) < 1:
             raise ValueError("expected len(name) to be >= 1, was %d" % len(name))
         self.__name = name
 
         if url is None:
             raise ValueError('url is required')
-        if not isinstance(url, basestring):
-            raise TypeError("expected url to be a str but it is a %s" % getattr(__builtin__, 'type')(url))
+        if not isinstance(url, str):
+            raise TypeError("expected url to be a str but it is a %s" % builtins.type(url))
         self.__url = url
 
     def __eq__(self, other):
@@ -205,7 +164,7 @@ class OmekaElementSet(object):
         return True
 
     def __hash__(self):
-        return hash((self.id,self.name,self.url,))
+        return hash((self.id, self.name, self.url,))
 
     def __iter__(self):
         return iter((self.id, self.name, self.url,))
@@ -216,31 +175,51 @@ class OmekaElementSet(object):
     def __repr__(self):
         field_reprs = []
         field_reprs.append('id=' + repr(self.id))
-        field_reprs.append('name=' + "'" + self.name.encode('ascii', 'replace') + "'")
-        field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace') + "'")
+        field_reprs.append('name=' + "'" + self.name.encode('ascii', 'replace').decode('ascii') + "'")
+        field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace').decode('ascii') + "'")
         return 'OmekaElementSet(' + ', '.join(field_reprs) + ')'
 
     def __str__(self):
         field_reprs = []
         field_reprs.append('id=' + repr(self.id))
-        field_reprs.append('name=' + "'" + self.name.encode('ascii', 'replace') + "'")
-        field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace') + "'")
+        field_reprs.append('name=' + "'" + self.name.encode('ascii', 'replace').decode('ascii') + "'")
+        field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace').decode('ascii') + "'")
         return 'OmekaElementSet(' + ', '.join(field_reprs) + ')'
 
-    @property
-    def id(self):  # @ReservedAssignment
-        '''
-        :rtype: int
-        '''
+    @classmethod
+    def builder(cls):
+        return cls.Builder()
 
+    @classmethod
+    def from_builtins(cls, _dict):
+        if not isinstance(_dict, dict):
+            raise ValueError("expected dict")
+
+        __builder = cls.builder()
+
+        id = _dict.get("id")
+        if id is None:
+            raise KeyError("id")
+        __builder.id = id
+
+        name = _dict.get("name")
+        if name is None:
+            raise KeyError("name")
+        __builder.name = name
+
+        url = _dict.get("url")
+        if url is None:
+            raise KeyError("url")
+        __builder.url = url
+
+        return __builder.build()
+
+    @property
+    def id(self) -> int:  # @ReservedAssignment
         return self.__id
 
     @property
-    def name(self):
-        '''
-        :rtype: str
-        '''
-
+    def name(self) -> str:
         return self.__name
 
     @classmethod
@@ -257,7 +236,7 @@ class OmekaElementSet(object):
         iprot.read_struct_begin()
         while True:
             ifield_name, ifield_type, _ifield_id = iprot.read_field_begin()
-            if ifield_type == 0: # STOP
+            if ifield_type == 0:  # STOP
                 break
             elif ifield_name == 'id':
                 init_kwds['id'] = iprot.read_i32()
@@ -270,35 +249,18 @@ class OmekaElementSet(object):
 
         return cls(**init_kwds)
 
-    def replace(
-        self,
-        id=None,  # @ReservedAssignment
-        name=None,
-        url=None,
-    ):
-        '''
-        Copy this object, replace one or more fields, and return the copy.
+    def replacer(self):
+        return self.Builder.from_template(template=self)
 
-        :type id: int or None
-        :type name: str or None
-        :type url: str or None
-        :rtype: yomeka.api.omeka_element_set.OmekaElementSet
-        '''
-
-        if id is None:
-            id = self.id  # @ReservedAssignment
-        if name is None:
-            name = self.name
-        if url is None:
-            url = self.url
-        return self.__class__(id=id, name=name, url=url)
+    def to_builtins(self):
+        dict_ = {}
+        dict_["id"] = self.id
+        dict_["name"] = self.name
+        dict_["url"] = self.url
+        return dict_
 
     @property
-    def url(self):
-        '''
-        :rtype: str
-        '''
-
+    def url(self) -> str:
         return self.__url
 
     def write(self, oprot):

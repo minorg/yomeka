@@ -1,4 +1,5 @@
-import __builtin__
+import builtins
+import typing
 
 
 class OmekaFileUrls(object):
@@ -10,13 +11,6 @@ class OmekaFileUrls(object):
             square_thumbnail=None,
             thumbnail=None,
         ):
-            '''
-            :type original: str
-            :type fullsize: str or None
-            :type square_thumbnail: str or None
-            :type thumbnail: str or None
-            '''
-
             self.__original = original
             self.__fullsize = fullsize
             self.__square_thumbnail = square_thumbnail
@@ -25,133 +19,92 @@ class OmekaFileUrls(object):
         def build(self):
             return OmekaFileUrls(original=self.__original, fullsize=self.__fullsize, square_thumbnail=self.__square_thumbnail, thumbnail=self.__thumbnail)
 
-        @property
-        def fullsize(self):
+        @classmethod
+        def from_template(cls, template):
             '''
-            :rtype: str
+            :type template: yomeka.api.omeka_file_urls.OmekaFileUrls
+            :rtype: yomeka.api.omeka_file_urls.OmekaFileUrls
             '''
 
+            builder = cls()
+            builder.original = template.original
+            builder.fullsize = template.fullsize
+            builder.square_thumbnail = template.square_thumbnail
+            builder.thumbnail = template.thumbnail
+            return builder
+
+        @property
+        def fullsize(self) -> typing.Optional[str]:
             return self.__fullsize
 
         @property
-        def original(self):
-            '''
-            :rtype: str
-            '''
-
+        def original(self) -> str:
             return self.__original
 
-        def set_fullsize(self, fullsize):
-            '''
-            :type fullsize: str or None
-            '''
-
+        def set_fullsize(self, fullsize: typing.Optional[str]):
             if fullsize is not None:
-                if not isinstance(fullsize, basestring):
-                    raise TypeError("expected fullsize to be a str but it is a %s" % getattr(__builtin__, 'type')(fullsize))
+                if not isinstance(fullsize, str):
+                    raise TypeError("expected fullsize to be a str but it is a %s" % builtins.type(fullsize))
             self.__fullsize = fullsize
             return self
 
-        def set_original(self, original):
-            '''
-            :type original: str
-            '''
-
+        def set_original(self, original: str):
             if original is None:
                 raise ValueError('original is required')
-            if not isinstance(original, basestring):
-                raise TypeError("expected original to be a str but it is a %s" % getattr(__builtin__, 'type')(original))
+            if not isinstance(original, str):
+                raise TypeError("expected original to be a str but it is a %s" % builtins.type(original))
             self.__original = original
             return self
 
-        def set_square_thumbnail(self, square_thumbnail):
-            '''
-            :type square_thumbnail: str or None
-            '''
-
+        def set_square_thumbnail(self, square_thumbnail: typing.Optional[str]):
             if square_thumbnail is not None:
-                if not isinstance(square_thumbnail, basestring):
-                    raise TypeError("expected square_thumbnail to be a str but it is a %s" % getattr(__builtin__, 'type')(square_thumbnail))
+                if not isinstance(square_thumbnail, str):
+                    raise TypeError("expected square_thumbnail to be a str but it is a %s" % builtins.type(square_thumbnail))
             self.__square_thumbnail = square_thumbnail
             return self
 
-        def set_thumbnail(self, thumbnail):
-            '''
-            :type thumbnail: str or None
-            '''
-
+        def set_thumbnail(self, thumbnail: typing.Optional[str]):
             if thumbnail is not None:
-                if not isinstance(thumbnail, basestring):
-                    raise TypeError("expected thumbnail to be a str but it is a %s" % getattr(__builtin__, 'type')(thumbnail))
+                if not isinstance(thumbnail, str):
+                    raise TypeError("expected thumbnail to be a str but it is a %s" % builtins.type(thumbnail))
             self.__thumbnail = thumbnail
             return self
 
         @property
-        def square_thumbnail(self):
-            '''
-            :rtype: str
-            '''
-
+        def square_thumbnail(self) -> typing.Optional[str]:
             return self.__square_thumbnail
 
         @property
-        def thumbnail(self):
-            '''
-            :rtype: str
-            '''
-
+        def thumbnail(self) -> typing.Optional[str]:
             return self.__thumbnail
 
         def update(self, omeka_file_urls):
-            '''
-            :type original: str
-            :type fullsize: str or None
-            :type square_thumbnail: str or None
-            :type thumbnail: str or None
-            '''
-
             if isinstance(omeka_file_urls, OmekaFileUrls):
                 self.set_original(omeka_file_urls.original)
                 self.set_fullsize(omeka_file_urls.fullsize)
                 self.set_square_thumbnail(omeka_file_urls.square_thumbnail)
                 self.set_thumbnail(omeka_file_urls.thumbnail)
             elif isinstance(omeka_file_urls, dict):
-                for key, value in omeka_file_urls.iteritems():
+                for key, value in omeka_file_urls.items():
                     getattr(self, 'set_' + key)(value)
             else:
                 raise TypeError(omeka_file_urls)
             return self
 
         @fullsize.setter
-        def fullsize(self, fullsize):
-            '''
-            :type fullsize: str or None
-            '''
-
+        def fullsize(self, fullsize: typing.Optional[str]) -> None:
             self.set_fullsize(fullsize)
 
         @original.setter
-        def original(self, original):
-            '''
-            :type original: str
-            '''
-
+        def original(self, original: str) -> None:
             self.set_original(original)
 
         @square_thumbnail.setter
-        def square_thumbnail(self, square_thumbnail):
-            '''
-            :type square_thumbnail: str or None
-            '''
-
+        def square_thumbnail(self, square_thumbnail: typing.Optional[str]) -> None:
             self.set_square_thumbnail(square_thumbnail)
 
         @thumbnail.setter
-        def thumbnail(self, thumbnail):
-            '''
-            :type thumbnail: str or None
-            '''
-
+        def thumbnail(self, thumbnail: typing.Optional[str]) -> None:
             self.set_thumbnail(thumbnail)
 
     class FieldMetadata(object):
@@ -195,37 +148,30 @@ class OmekaFileUrls(object):
 
     def __init__(
         self,
-        original,
-        fullsize=None,
-        square_thumbnail=None,
-        thumbnail=None,
+        original: str,
+        fullsize: typing.Optional[str] = None,
+        square_thumbnail: typing.Optional[str] = None,
+        thumbnail: typing.Optional[str] = None,
     ):
-        '''
-        :type original: str
-        :type fullsize: str or None
-        :type square_thumbnail: str or None
-        :type thumbnail: str or None
-        '''
-
         if original is None:
             raise ValueError('original is required')
-        if not isinstance(original, basestring):
-            raise TypeError("expected original to be a str but it is a %s" % getattr(__builtin__, 'type')(original))
+        if not isinstance(original, str):
+            raise TypeError("expected original to be a str but it is a %s" % builtins.type(original))
         self.__original = original
 
         if fullsize is not None:
-            if not isinstance(fullsize, basestring):
-                raise TypeError("expected fullsize to be a str but it is a %s" % getattr(__builtin__, 'type')(fullsize))
+            if not isinstance(fullsize, str):
+                raise TypeError("expected fullsize to be a str but it is a %s" % builtins.type(fullsize))
         self.__fullsize = fullsize
 
         if square_thumbnail is not None:
-            if not isinstance(square_thumbnail, basestring):
-                raise TypeError("expected square_thumbnail to be a str but it is a %s" % getattr(__builtin__, 'type')(square_thumbnail))
+            if not isinstance(square_thumbnail, str):
+                raise TypeError("expected square_thumbnail to be a str but it is a %s" % builtins.type(square_thumbnail))
         self.__square_thumbnail = square_thumbnail
 
         if thumbnail is not None:
-            if not isinstance(thumbnail, basestring):
-                raise TypeError("expected thumbnail to be a str but it is a %s" % getattr(__builtin__, 'type')(thumbnail))
+            if not isinstance(thumbnail, str):
+                raise TypeError("expected thumbnail to be a str but it is a %s" % builtins.type(thumbnail))
         self.__thumbnail = thumbnail
 
     def __eq__(self, other):
@@ -240,7 +186,7 @@ class OmekaFileUrls(object):
         return True
 
     def __hash__(self):
-        return hash((self.original,self.fullsize,self.square_thumbnail,self.thumbnail,))
+        return hash((self.original, self.fullsize, self.square_thumbnail, self.thumbnail,))
 
     def __iter__(self):
         return iter((self.original, self.fullsize, self.square_thumbnail, self.thumbnail,))
@@ -250,40 +196,56 @@ class OmekaFileUrls(object):
 
     def __repr__(self):
         field_reprs = []
-        field_reprs.append('original=' + "'" + self.original.encode('ascii', 'replace') + "'")
+        field_reprs.append('original=' + "'" + self.original.encode('ascii', 'replace').decode('ascii') + "'")
         if self.fullsize is not None:
-            field_reprs.append('fullsize=' + "'" + self.fullsize.encode('ascii', 'replace') + "'")
+            field_reprs.append('fullsize=' + "'" + self.fullsize.encode('ascii', 'replace').decode('ascii') + "'")
         if self.square_thumbnail is not None:
-            field_reprs.append('square_thumbnail=' + "'" + self.square_thumbnail.encode('ascii', 'replace') + "'")
+            field_reprs.append('square_thumbnail=' + "'" + self.square_thumbnail.encode('ascii', 'replace').decode('ascii') + "'")
         if self.thumbnail is not None:
-            field_reprs.append('thumbnail=' + "'" + self.thumbnail.encode('ascii', 'replace') + "'")
+            field_reprs.append('thumbnail=' + "'" + self.thumbnail.encode('ascii', 'replace').decode('ascii') + "'")
         return 'OmekaFileUrls(' + ', '.join(field_reprs) + ')'
 
     def __str__(self):
         field_reprs = []
-        field_reprs.append('original=' + "'" + self.original.encode('ascii', 'replace') + "'")
+        field_reprs.append('original=' + "'" + self.original.encode('ascii', 'replace').decode('ascii') + "'")
         if self.fullsize is not None:
-            field_reprs.append('fullsize=' + "'" + self.fullsize.encode('ascii', 'replace') + "'")
+            field_reprs.append('fullsize=' + "'" + self.fullsize.encode('ascii', 'replace').decode('ascii') + "'")
         if self.square_thumbnail is not None:
-            field_reprs.append('square_thumbnail=' + "'" + self.square_thumbnail.encode('ascii', 'replace') + "'")
+            field_reprs.append('square_thumbnail=' + "'" + self.square_thumbnail.encode('ascii', 'replace').decode('ascii') + "'")
         if self.thumbnail is not None:
-            field_reprs.append('thumbnail=' + "'" + self.thumbnail.encode('ascii', 'replace') + "'")
+            field_reprs.append('thumbnail=' + "'" + self.thumbnail.encode('ascii', 'replace').decode('ascii') + "'")
         return 'OmekaFileUrls(' + ', '.join(field_reprs) + ')'
 
-    @property
-    def fullsize(self):
-        '''
-        :rtype: str
-        '''
+    @classmethod
+    def builder(cls):
+        return cls.Builder()
 
+    @classmethod
+    def from_builtins(cls, _dict):
+        if not isinstance(_dict, dict):
+            raise ValueError("expected dict")
+
+        __builder = cls.builder()
+
+        original = _dict.get("original")
+        if original is None:
+            raise KeyError("original")
+        __builder.original = original
+
+        __builder.fullsize = _dict.get("fullsize")
+
+        __builder.square_thumbnail = _dict.get("square_thumbnail")
+
+        __builder.thumbnail = _dict.get("thumbnail")
+
+        return __builder.build()
+
+    @property
+    def fullsize(self) -> typing.Optional[str]:
         return self.__fullsize
 
     @property
-    def original(self):
-        '''
-        :rtype: str
-        '''
-
+    def original(self) -> str:
         return self.__original
 
     @classmethod
@@ -300,7 +262,7 @@ class OmekaFileUrls(object):
         iprot.read_struct_begin()
         while True:
             ifield_name, ifield_type, _ifield_id = iprot.read_field_begin()
-            if ifield_type == 0: # STOP
+            if ifield_type == 0:  # STOP
                 break
             elif ifield_name == 'original':
                 init_kwds['original'] = iprot.read_string()
@@ -324,48 +286,27 @@ class OmekaFileUrls(object):
 
         return cls(**init_kwds)
 
-    def replace(
-        self,
-        original=None,
-        fullsize=None,
-        square_thumbnail=None,
-        thumbnail=None,
-    ):
-        '''
-        Copy this object, replace one or more fields, and return the copy.
-
-        :type original: str or None
-        :type fullsize: str or None
-        :type square_thumbnail: str or None
-        :type thumbnail: str or None
-        :rtype: yomeka.api.omeka_file_urls.OmekaFileUrls
-        '''
-
-        if original is None:
-            original = self.original
-        if fullsize is None:
-            fullsize = self.fullsize
-        if square_thumbnail is None:
-            square_thumbnail = self.square_thumbnail
-        if thumbnail is None:
-            thumbnail = self.thumbnail
-        return self.__class__(original=original, fullsize=fullsize, square_thumbnail=square_thumbnail, thumbnail=thumbnail)
+    def replacer(self):
+        return self.Builder.from_template(template=self)
 
     @property
-    def square_thumbnail(self):
-        '''
-        :rtype: str
-        '''
-
+    def square_thumbnail(self) -> typing.Optional[str]:
         return self.__square_thumbnail
 
     @property
-    def thumbnail(self):
-        '''
-        :rtype: str
-        '''
-
+    def thumbnail(self) -> typing.Optional[str]:
         return self.__thumbnail
+
+    def to_builtins(self):
+        dict_ = {}
+        dict_["original"] = self.original
+        if self.fullsize is not None:
+            dict_["fullsize"] = self.fullsize
+        if self.square_thumbnail is not None:
+            dict_["square_thumbnail"] = self.square_thumbnail
+        if self.thumbnail is not None:
+            dict_["thumbnail"] = self.thumbnail
+        return dict_
 
     def write(self, oprot):
         '''

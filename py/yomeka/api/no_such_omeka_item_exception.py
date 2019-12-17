@@ -3,6 +3,17 @@ class NoSuchOmekaItemException(Exception):
         def build(self):
             return NoSuchOmekaItemException()
 
+        @classmethod
+        def from_template(cls, template):
+            '''
+            :type template: yomeka.api.no_such_omeka_item_exception.NoSuchOmekaItemException
+            :rtype: yomeka.api.no_such_omeka_item_exception.NoSuchOmekaItemException
+            '''
+
+            builder = cls()
+
+            return builder
+
     def __eq__(self, other):
         return True
 
@@ -19,6 +30,21 @@ class NoSuchOmekaItemException(Exception):
         return 'NoSuchOmekaItemException()'
 
     @classmethod
+    def builder(cls):
+        return cls.Builder()
+
+    @classmethod
+    def from_builtins(cls, _dict):
+        if not isinstance(_dict, dict):
+            raise ValueError("expected dict")
+
+        __builder = cls.builder()
+
+
+
+        return __builder.build()
+
+    @classmethod
     def read(cls, iprot):
         '''
         Read a new object from the given input protocol and return the object.
@@ -30,6 +56,14 @@ class NoSuchOmekaItemException(Exception):
         iprot.read_struct_begin()
         iprot.read_struct_end()
         return cls()
+
+    def replacer(self):
+        return self.Builder.from_template(template=self)
+
+    def to_builtins(self):
+        dict_ = {}
+
+        return dict_
 
     def write(self, oprot):
         '''
