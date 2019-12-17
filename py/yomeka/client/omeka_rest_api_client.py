@@ -1,6 +1,6 @@
 import json
 import logging
-from urllib import urlopen
+from urllib.request import urlopen
 
 from yomeka.api.no_such_omeka_collection_exception import NoSuchOmekaCollectionException
 from yomeka.api.no_such_omeka_item_exception import NoSuchOmekaItemException
@@ -35,7 +35,7 @@ class OmekaRestApiClient(OmekaApi):
 
     def _get_collections(self, **kwds):
         url = self.__endpoint_url + 'api/collections?key=' + self.__api_key
-        for key, value in kwds.iteritems():
+        for key, value in kwds.items():
             if value is None:
                 continue
             url = url + "&%(key)s=%(value)s" % locals()
@@ -43,7 +43,7 @@ class OmekaRestApiClient(OmekaApi):
 
     def _get_files(self, **kwds):
         url = self.__endpoint_url + 'api/files?key=' + self.__api_key
-        for key, value in kwds.iteritems():
+        for key, value in kwds.items():
             if value is None:
                 continue
             url = url + "&%(key)s=%(value)s" % locals()
@@ -58,7 +58,7 @@ class OmekaRestApiClient(OmekaApi):
 
     def _get_items(self, **kwds):
         url = self.__endpoint_url + 'api/items?key=' + self.__api_key
-        for key, value in kwds.iteritems():
+        for key, value in kwds.items():
             if value is None:
                 continue
             url = url + "&%(key)s=%(value)s" % locals()

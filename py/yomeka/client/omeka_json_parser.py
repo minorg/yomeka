@@ -69,7 +69,7 @@ class OmekaJsonParser(object):
 
     def parse_file_dict(self, file_dict):
         file_urls_builder = OmekaFileUrls.Builder()
-        for key, value in file_dict['file_urls'].iteritems():
+        for key, value in file_dict['file_urls'].items():
             getattr(file_urls_builder, 'set_' + key)(value)
         file_urls = file_urls_builder.build()
 

@@ -1,4 +1,4 @@
-import __builtin__
+import builtins
 
 
 class IoException(Exception):
@@ -7,55 +7,46 @@ class IoException(Exception):
             self,
             cause_message=None,
         ):
-            '''
-            :type cause_message: str
-            '''
-
             self.__cause_message = cause_message
 
         def build(self):
             return IoException(cause_message=self.__cause_message)
 
         @property
-        def cause_message(self):
-            '''
-            :rtype: str
-            '''
-
+        def cause_message(self) -> str:
             return self.__cause_message
 
-        def set_cause_message(self, cause_message):
+        @classmethod
+        def from_template(cls, template):
             '''
-            :type cause_message: str
+            :type template: yomeka.api.io_exception.IoException
+            :rtype: yomeka.api.io_exception.IoException
             '''
 
+            builder = cls()
+            builder.cause_message = template.cause_message
+            return builder
+
+        def set_cause_message(self, cause_message: str):
             if cause_message is None:
                 raise ValueError('cause_message is required')
-            if not isinstance(cause_message, basestring):
-                raise TypeError("expected cause_message to be a str but it is a %s" % getattr(__builtin__, 'type')(cause_message))
+            if not isinstance(cause_message, str):
+                raise TypeError("expected cause_message to be a str but it is a %s" % builtins.type(cause_message))
             self.__cause_message = cause_message
             return self
 
         def update(self, io_exception):
-            '''
-            :type cause_message: str
-            '''
-
             if isinstance(io_exception, IoException):
                 self.set_cause_message(io_exception.cause_message)
             elif isinstance(io_exception, dict):
-                for key, value in io_exception.iteritems():
+                for key, value in io_exception.items():
                     getattr(self, 'set_' + key)(value)
             else:
                 raise TypeError(io_exception)
             return self
 
         @cause_message.setter
-        def cause_message(self, cause_message):
-            '''
-            :type cause_message: str
-            '''
-
+        def cause_message(self, cause_message: str) -> None:
             self.set_cause_message(cause_message)
 
     class FieldMetadata(object):
@@ -93,16 +84,12 @@ class IoException(Exception):
 
     def __init__(
         self,
-        cause_message,
+        cause_message: str,
     ):
-        '''
-        :type cause_message: str
-        '''
-
         if cause_message is None:
             raise ValueError('cause_message is required')
-        if not isinstance(cause_message, basestring):
-            raise TypeError("expected cause_message to be a str but it is a %s" % getattr(__builtin__, 'type')(cause_message))
+        if not isinstance(cause_message, str):
+            raise TypeError("expected cause_message to be a str but it is a %s" % builtins.type(cause_message))
         self.__cause_message = cause_message
 
     def __eq__(self, other):
@@ -121,21 +108,35 @@ class IoException(Exception):
 
     def __repr__(self):
         field_reprs = []
-        field_reprs.append('cause_message=' + "'" + self.cause_message.encode('ascii', 'replace') + "'")
+        field_reprs.append('cause_message=' + "'" + self.cause_message.encode('ascii', 'replace').decode('ascii') + "'")
         return 'IoException(' + ', '.join(field_reprs) + ')'
 
     def __str__(self):
         field_reprs = []
-        field_reprs.append('cause_message=' + "'" + self.cause_message.encode('ascii', 'replace') + "'")
+        field_reprs.append('cause_message=' + "'" + self.cause_message.encode('ascii', 'replace').decode('ascii') + "'")
         return 'IoException(' + ', '.join(field_reprs) + ')'
 
-    @property
-    def cause_message(self):
-        '''
-        :rtype: str
-        '''
+    @classmethod
+    def builder(cls):
+        return cls.Builder()
 
+    @property
+    def cause_message(self) -> str:
         return self.__cause_message
+
+    @classmethod
+    def from_builtins(cls, _dict):
+        if not isinstance(_dict, dict):
+            raise ValueError("expected dict")
+
+        __builder = cls.builder()
+
+        cause_message = _dict.get("cause_message")
+        if cause_message is None:
+            raise KeyError("cause_message")
+        __builder.cause_message = cause_message
+
+        return __builder.build()
 
     @classmethod
     def read(cls, iprot):
@@ -151,7 +152,7 @@ class IoException(Exception):
         iprot.read_struct_begin()
         while True:
             ifield_name, ifield_type, _ifield_id = iprot.read_field_begin()
-            if ifield_type == 0: # STOP
+            if ifield_type == 0:  # STOP
                 break
             elif ifield_name == 'cause_message':
                 init_kwds['cause_message'] = iprot.read_string()
@@ -160,20 +161,13 @@ class IoException(Exception):
 
         return cls(**init_kwds)
 
-    def replace(
-        self,
-        cause_message=None,
-    ):
-        '''
-        Copy this object, replace one or more fields, and return the copy.
+    def replacer(self):
+        return self.Builder.from_template(template=self)
 
-        :type cause_message: str or None
-        :rtype: yomeka.api.io_exception.IoException
-        '''
-
-        if cause_message is None:
-            cause_message = self.cause_message
-        return self.__class__(cause_message=cause_message)
+    def to_builtins(self):
+        dict_ = {}
+        dict_["cause_message"] = self.cause_message
+        return dict_
 
     def write(self, oprot):
         '''

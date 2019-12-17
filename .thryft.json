@@ -1,0 +1,26 @@
+{
+    "version": 1,
+
+    "tasks": {
+        "clean": [
+            "py/yomeka/api"
+        ],
+        "generate": [
+            {
+                "description": "Python",
+                "thrift_root_dir": "thrift/src",
+                "thrift_include_dirs": ["../thryft-waf/thrift/src"],
+                "thrift_files": ["thrift/src/**/*.thrift"],
+                "gen": {
+                    "py": "py"
+                }
+            }
+        ],
+        "lint": [{
+            "thrift_root_dir": "thrift/src",
+            "thrift_include_dirs": ["../thryft-waf/thrift/src"]
+        }]
+    },
+
+    "pythonpath": ["../thryft-waf/thrift/src/thryft"]
+}

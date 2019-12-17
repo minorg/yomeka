@@ -1,6 +1,7 @@
-from itertools import ifilterfalse
-import __builtin__
+from itertools import filterfalse
+import builtins
 import datetime
+import typing
 import yomeka.api.omeka_element_text
 
 
@@ -18,18 +19,6 @@ class OmekaCollection(object):
             url=None,
             json=None,
         ):
-            '''
-            :type added: datetime.datetime
-            :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-            :type featured: bool
-            :type id: int
-            :type items_count: int
-            :type modified: datetime.datetime
-            :type public: bool
-            :type url: str
-            :type json: str or None
-            '''
-
             self.__added = added
             self.__element_texts = element_texts
             self.__featured = featured
@@ -44,191 +33,130 @@ class OmekaCollection(object):
             return OmekaCollection(added=self.__added, element_texts=self.__element_texts, featured=self.__featured, id=self.__id, items_count=self.__items_count, modified=self.__modified, public=self.__public, url=self.__url, json=self.__json)
 
         @property
-        def added(self):
-            '''
-            :rtype: datetime.datetime
-            '''
-
+        def added(self) -> datetime.datetime:
             return self.__added
 
         @property
-        def element_texts(self):
-            '''
-            :rtype: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-            '''
-
+        def element_texts(self) -> typing.Tuple[yomeka.api.omeka_element_text.OmekaElementText, ...]:
             return self.__element_texts
 
         @property
-        def featured(self):
-            '''
-            :rtype: bool
-            '''
-
+        def featured(self) -> bool:
             return self.__featured
 
-        @property
-        def id(self):  # @ReservedAssignment
+        @classmethod
+        def from_template(cls, template):
             '''
-            :rtype: int
+            :type template: yomeka.api.omeka_collection.OmekaCollection
+            :rtype: yomeka.api.omeka_collection.OmekaCollection
             '''
 
+            builder = cls()
+            builder.added = template.added
+            builder.element_texts = template.element_texts
+            builder.featured = template.featured
+            builder.id = template.id
+            builder.items_count = template.items_count
+            builder.modified = template.modified
+            builder.public = template.public
+            builder.url = template.url
+            builder.json = template.json
+            return builder
+
+        @property
+        def id(self) -> int:  # @ReservedAssignment
             return self.__id
 
         @property
-        def items_count(self):
-            '''
-            :rtype: int
-            '''
-
+        def items_count(self) -> int:
             return self.__items_count
 
         @property
-        def json(self):
-            '''
-            :rtype: str
-            '''
-
+        def json(self) -> typing.Optional[str]:
             return self.__json
 
         @property
-        def modified(self):
-            '''
-            :rtype: datetime.datetime
-            '''
-
+        def modified(self) -> datetime.datetime:
             return self.__modified
 
         @property
-        def public(self):
-            '''
-            :rtype: bool
-            '''
-
+        def public(self) -> bool:
             return self.__public
 
-        def set_added(self, added):
-            '''
-            :type added: datetime.datetime
-            '''
-
+        def set_added(self, added: datetime.datetime):
             if added is None:
                 raise ValueError('added is required')
             if not isinstance(added, datetime.datetime):
-                raise TypeError("expected added to be a datetime.datetime but it is a %s" % getattr(__builtin__, 'type')(added))
+                raise TypeError("expected added to be a datetime.datetime but it is a %s" % builtins.type(added))
             self.__added = added
             return self
 
-        def set_element_texts(self, element_texts):
-            '''
-            :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-            '''
-
+        def set_element_texts(self, element_texts: typing.Tuple[yomeka.api.omeka_element_text.OmekaElementText, ...]):
             if element_texts is None:
                 raise ValueError('element_texts is required')
-            if not (isinstance(element_texts, tuple) and len(list(ifilterfalse(lambda _: isinstance(_, yomeka.api.omeka_element_text.OmekaElementText), element_texts))) == 0):
-                raise TypeError("expected element_texts to be a tuple(yomeka.api.omeka_element_text.OmekaElementText) but it is a %s" % getattr(__builtin__, 'type')(element_texts))
+            if not (isinstance(element_texts, tuple) and len(list(filterfalse(lambda _: isinstance(_, yomeka.api.omeka_element_text.OmekaElementText), element_texts))) == 0):
+                raise TypeError("expected element_texts to be a typing.Tuple[yomeka.api.omeka_element_text.OmekaElementText, ...] but it is a %s" % builtins.type(element_texts))
             self.__element_texts = element_texts
             return self
 
-        def set_featured(self, featured):
-            '''
-            :type featured: bool
-            '''
-
+        def set_featured(self, featured: bool):
             if featured is None:
                 raise ValueError('featured is required')
             if not isinstance(featured, bool):
-                raise TypeError("expected featured to be a bool but it is a %s" % getattr(__builtin__, 'type')(featured))
+                raise TypeError("expected featured to be a bool but it is a %s" % builtins.type(featured))
             self.__featured = featured
             return self
 
-        def set_id(self, id):  # @ReservedAssignment
-            '''
-            :type id: int
-            '''
-
+        def set_id(self, id: int):  # @ReservedAssignment
             if id is None:
                 raise ValueError('id is required')
             if not isinstance(id, int):
-                raise TypeError("expected id to be a int but it is a %s" % getattr(__builtin__, 'type')(id))
+                raise TypeError("expected id to be a int but it is a %s" % builtins.type(id))
             self.__id = id
             return self
 
-        def set_items_count(self, items_count):
-            '''
-            :type items_count: int
-            '''
-
+        def set_items_count(self, items_count: int):
             if items_count is None:
                 raise ValueError('items_count is required')
             if not isinstance(items_count, int):
-                raise TypeError("expected items_count to be a int but it is a %s" % getattr(__builtin__, 'type')(items_count))
+                raise TypeError("expected items_count to be a int but it is a %s" % builtins.type(items_count))
             self.__items_count = items_count
             return self
 
-        def set_json(self, json):
-            '''
-            :type json: str or None
-            '''
-
+        def set_json(self, json: typing.Optional[str]):
             if json is not None:
-                if not isinstance(json, basestring):
-                    raise TypeError("expected json to be a str but it is a %s" % getattr(__builtin__, 'type')(json))
+                if not isinstance(json, str):
+                    raise TypeError("expected json to be a str but it is a %s" % builtins.type(json))
                 if len(json) < 1:
                     raise ValueError("expected len(json) to be >= 1, was %d" % len(json))
             self.__json = json
             return self
 
-        def set_modified(self, modified):
-            '''
-            :type modified: datetime.datetime
-            '''
-
+        def set_modified(self, modified: datetime.datetime):
             if modified is None:
                 raise ValueError('modified is required')
             if not isinstance(modified, datetime.datetime):
-                raise TypeError("expected modified to be a datetime.datetime but it is a %s" % getattr(__builtin__, 'type')(modified))
+                raise TypeError("expected modified to be a datetime.datetime but it is a %s" % builtins.type(modified))
             self.__modified = modified
             return self
 
-        def set_public(self, public):
-            '''
-            :type public: bool
-            '''
-
+        def set_public(self, public: bool):
             if public is None:
                 raise ValueError('public is required')
             if not isinstance(public, bool):
-                raise TypeError("expected public to be a bool but it is a %s" % getattr(__builtin__, 'type')(public))
+                raise TypeError("expected public to be a bool but it is a %s" % builtins.type(public))
             self.__public = public
             return self
 
-        def set_url(self, url):
-            '''
-            :type url: str
-            '''
-
+        def set_url(self, url: str):
             if url is None:
                 raise ValueError('url is required')
-            if not isinstance(url, basestring):
-                raise TypeError("expected url to be a str but it is a %s" % getattr(__builtin__, 'type')(url))
+            if not isinstance(url, str):
+                raise TypeError("expected url to be a str but it is a %s" % builtins.type(url))
             self.__url = url
             return self
 
         def update(self, omeka_collection):
-            '''
-            :type added: datetime.datetime
-            :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-            :type featured: bool
-            :type id: int
-            :type items_count: int
-            :type modified: datetime.datetime
-            :type public: bool
-            :type url: str
-            :type json: str or None
-            '''
-
             if isinstance(omeka_collection, OmekaCollection):
                 self.set_added(omeka_collection.added)
                 self.set_element_texts(omeka_collection.element_texts)
@@ -240,90 +168,50 @@ class OmekaCollection(object):
                 self.set_url(omeka_collection.url)
                 self.set_json(omeka_collection.json)
             elif isinstance(omeka_collection, dict):
-                for key, value in omeka_collection.iteritems():
+                for key, value in omeka_collection.items():
                     getattr(self, 'set_' + key)(value)
             else:
                 raise TypeError(omeka_collection)
             return self
 
         @property
-        def url(self):
-            '''
-            :rtype: str
-            '''
-
+        def url(self) -> str:
             return self.__url
 
         @added.setter
-        def added(self, added):
-            '''
-            :type added: datetime.datetime
-            '''
-
+        def added(self, added: datetime.datetime) -> None:
             self.set_added(added)
 
         @element_texts.setter
-        def element_texts(self, element_texts):
-            '''
-            :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-            '''
-
+        def element_texts(self, element_texts: typing.Tuple[yomeka.api.omeka_element_text.OmekaElementText, ...]) -> None:
             self.set_element_texts(element_texts)
 
         @featured.setter
-        def featured(self, featured):
-            '''
-            :type featured: bool
-            '''
-
+        def featured(self, featured: bool) -> None:
             self.set_featured(featured)
 
         @id.setter
-        def id(self, id):  # @ReservedAssignment
-            '''
-            :type id: int
-            '''
-
+        def id(self, id: int) -> None:  # @ReservedAssignment
             self.set_id(id)
 
         @items_count.setter
-        def items_count(self, items_count):
-            '''
-            :type items_count: int
-            '''
-
+        def items_count(self, items_count: int) -> None:
             self.set_items_count(items_count)
 
         @json.setter
-        def json(self, json):
-            '''
-            :type json: str or None
-            '''
-
+        def json(self, json: typing.Optional[str]) -> None:
             self.set_json(json)
 
         @modified.setter
-        def modified(self, modified):
-            '''
-            :type modified: datetime.datetime
-            '''
-
+        def modified(self, modified: datetime.datetime) -> None:
             self.set_modified(modified)
 
         @public.setter
-        def public(self, public):
-            '''
-            :type public: bool
-            '''
-
+        def public(self, public: bool) -> None:
             self.set_public(public)
 
         @url.setter
-        def url(self, url):
-            '''
-            :type url: str
-            '''
-
+        def url(self, url: str) -> None:
             self.set_url(url)
 
     class FieldMetadata(object):
@@ -373,83 +261,71 @@ class OmekaCollection(object):
     FieldMetadata.MODIFIED = FieldMetadata('modified', datetime.datetime, None)
     FieldMetadata.PUBLIC = FieldMetadata('public', bool, None)
     FieldMetadata.URL = FieldMetadata('url', str, None)
-    FieldMetadata.JSON = FieldMetadata('json', str, {u'minLength': 1})
+    FieldMetadata.JSON = FieldMetadata('json', str, {'minLength': 1})
 
     def __init__(
         self,
-        added,
-        element_texts,
-        featured,
-        id,  # @ReservedAssignment
-        items_count,
-        modified,
-        public,
-        url,
-        json=None,
+        added: datetime.datetime,
+        element_texts: typing.Tuple[yomeka.api.omeka_element_text.OmekaElementText, ...],
+        featured: bool,
+        id: int,  # @ReservedAssignment
+        items_count: int,
+        modified: datetime.datetime,
+        public: bool,
+        url: str,
+        json: typing.Optional[str] = None,
     ):
-        '''
-        :type added: datetime.datetime
-        :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-        :type featured: bool
-        :type id: int
-        :type items_count: int
-        :type modified: datetime.datetime
-        :type public: bool
-        :type url: str
-        :type json: str or None
-        '''
-
         if added is None:
             raise ValueError('added is required')
         if not isinstance(added, datetime.datetime):
-            raise TypeError("expected added to be a datetime.datetime but it is a %s" % getattr(__builtin__, 'type')(added))
+            raise TypeError("expected added to be a datetime.datetime but it is a %s" % builtins.type(added))
         self.__added = added
 
         if element_texts is None:
             raise ValueError('element_texts is required')
-        if not (isinstance(element_texts, tuple) and len(list(ifilterfalse(lambda _: isinstance(_, yomeka.api.omeka_element_text.OmekaElementText), element_texts))) == 0):
-            raise TypeError("expected element_texts to be a tuple(yomeka.api.omeka_element_text.OmekaElementText) but it is a %s" % getattr(__builtin__, 'type')(element_texts))
+        if not (isinstance(element_texts, tuple) and len(list(filterfalse(lambda _: isinstance(_, yomeka.api.omeka_element_text.OmekaElementText), element_texts))) == 0):
+            raise TypeError("expected element_texts to be a typing.Tuple[yomeka.api.omeka_element_text.OmekaElementText, ...] but it is a %s" % builtins.type(element_texts))
         self.__element_texts = element_texts
 
         if featured is None:
             raise ValueError('featured is required')
         if not isinstance(featured, bool):
-            raise TypeError("expected featured to be a bool but it is a %s" % getattr(__builtin__, 'type')(featured))
+            raise TypeError("expected featured to be a bool but it is a %s" % builtins.type(featured))
         self.__featured = featured
 
         if id is None:
             raise ValueError('id is required')
         if not isinstance(id, int):
-            raise TypeError("expected id to be a int but it is a %s" % getattr(__builtin__, 'type')(id))
+            raise TypeError("expected id to be a int but it is a %s" % builtins.type(id))
         self.__id = id
 
         if items_count is None:
             raise ValueError('items_count is required')
         if not isinstance(items_count, int):
-            raise TypeError("expected items_count to be a int but it is a %s" % getattr(__builtin__, 'type')(items_count))
+            raise TypeError("expected items_count to be a int but it is a %s" % builtins.type(items_count))
         self.__items_count = items_count
 
         if modified is None:
             raise ValueError('modified is required')
         if not isinstance(modified, datetime.datetime):
-            raise TypeError("expected modified to be a datetime.datetime but it is a %s" % getattr(__builtin__, 'type')(modified))
+            raise TypeError("expected modified to be a datetime.datetime but it is a %s" % builtins.type(modified))
         self.__modified = modified
 
         if public is None:
             raise ValueError('public is required')
         if not isinstance(public, bool):
-            raise TypeError("expected public to be a bool but it is a %s" % getattr(__builtin__, 'type')(public))
+            raise TypeError("expected public to be a bool but it is a %s" % builtins.type(public))
         self.__public = public
 
         if url is None:
             raise ValueError('url is required')
-        if not isinstance(url, basestring):
-            raise TypeError("expected url to be a str but it is a %s" % getattr(__builtin__, 'type')(url))
+        if not isinstance(url, str):
+            raise TypeError("expected url to be a str but it is a %s" % builtins.type(url))
         self.__url = url
 
         if json is not None:
-            if not isinstance(json, basestring):
-                raise TypeError("expected json to be a str but it is a %s" % getattr(__builtin__, 'type')(json))
+            if not isinstance(json, str):
+                raise TypeError("expected json to be a str but it is a %s" % builtins.type(json))
             if len(json) < 1:
                 raise ValueError("expected len(json) to be >= 1, was %d" % len(json))
         self.__json = json
@@ -476,7 +352,7 @@ class OmekaCollection(object):
         return True
 
     def __hash__(self):
-        return hash((self.added,self.element_texts,self.featured,self.id,self.items_count,self.modified,self.public,self.url,self.json,))
+        return hash((self.added, self.element_texts, self.featured, self.id, self.items_count, self.modified, self.public, self.url, self.json,))
 
     def __iter__(self):
         return iter((self.added, self.element_texts, self.featured, self.id, self.items_count, self.modified, self.public, self.url, self.json,))
@@ -493,9 +369,9 @@ class OmekaCollection(object):
         field_reprs.append('items_count=' + repr(self.items_count))
         field_reprs.append('modified=' + repr(self.modified))
         field_reprs.append('public=' + repr(self.public))
-        field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace') + "'")
+        field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace').decode('ascii') + "'")
         if self.json is not None:
-            field_reprs.append('json=' + "'" + self.json.encode('ascii', 'replace') + "'")
+            field_reprs.append('json=' + "'" + self.json.encode('ascii', 'replace').decode('ascii') + "'")
         return 'OmekaCollection(' + ', '.join(field_reprs) + ')'
 
     def __str__(self):
@@ -507,73 +383,97 @@ class OmekaCollection(object):
         field_reprs.append('items_count=' + repr(self.items_count))
         field_reprs.append('modified=' + repr(self.modified))
         field_reprs.append('public=' + repr(self.public))
-        field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace') + "'")
+        field_reprs.append('url=' + "'" + self.url.encode('ascii', 'replace').decode('ascii') + "'")
         if self.json is not None:
-            field_reprs.append('json=' + "'" + self.json.encode('ascii', 'replace') + "'")
+            field_reprs.append('json=' + "'" + self.json.encode('ascii', 'replace').decode('ascii') + "'")
         return 'OmekaCollection(' + ', '.join(field_reprs) + ')'
 
     @property
-    def added(self):
-        '''
-        :rtype: datetime.datetime
-        '''
-
+    def added(self) -> datetime.datetime:
         return self.__added
 
-    @property
-    def element_texts(self):
-        '''
-        :rtype: tuple(yomeka.api.omeka_element_text.OmekaElementText)
-        '''
+    @classmethod
+    def builder(cls):
+        return cls.Builder()
 
+    @property
+    def element_texts(self) -> typing.Tuple[yomeka.api.omeka_element_text.OmekaElementText, ...]:
         return self.__element_texts
 
     @property
-    def featured(self):
-        '''
-        :rtype: bool
-        '''
-
+    def featured(self) -> bool:
         return self.__featured
 
-    @property
-    def id(self):  # @ReservedAssignment
-        '''
-        :rtype: int
-        '''
+    @classmethod
+    def from_builtins(cls, _dict):
+        if not isinstance(_dict, dict):
+            raise ValueError("expected dict")
 
+        __builder = cls.builder()
+
+        added = _dict.get("added")
+        if added is None:
+            raise KeyError("added")
+        __builder.added = added
+
+        element_texts = _dict.get("element_texts")
+        if element_texts is None:
+            raise KeyError("element_texts")
+        element_texts = tuple(yomeka.api.omeka_element_text.OmekaElementText.from_builtins(element0) for element0 in element_texts)
+        __builder.element_texts = element_texts
+
+        featured = _dict.get("featured")
+        if featured is None:
+            raise KeyError("featured")
+        __builder.featured = featured
+
+        id = _dict.get("id")
+        if id is None:
+            raise KeyError("id")
+        __builder.id = id
+
+        items_count = _dict.get("items_count")
+        if items_count is None:
+            raise KeyError("items_count")
+        __builder.items_count = items_count
+
+        modified = _dict.get("modified")
+        if modified is None:
+            raise KeyError("modified")
+        __builder.modified = modified
+
+        public = _dict.get("public")
+        if public is None:
+            raise KeyError("public")
+        __builder.public = public
+
+        url = _dict.get("url")
+        if url is None:
+            raise KeyError("url")
+        __builder.url = url
+
+        __builder.json = _dict.get("json")
+
+        return __builder.build()
+
+    @property
+    def id(self) -> int:  # @ReservedAssignment
         return self.__id
 
     @property
-    def items_count(self):
-        '''
-        :rtype: int
-        '''
-
+    def items_count(self) -> int:
         return self.__items_count
 
     @property
-    def json(self):
-        '''
-        :rtype: str
-        '''
-
+    def json(self) -> typing.Optional[str]:
         return self.__json
 
     @property
-    def modified(self):
-        '''
-        :rtype: datetime.datetime
-        '''
-
+    def modified(self) -> datetime.datetime:
         return self.__modified
 
     @property
-    def public(self):
-        '''
-        :rtype: bool
-        '''
-
+    def public(self) -> bool:
         return self.__public
 
     @classmethod
@@ -590,12 +490,12 @@ class OmekaCollection(object):
         iprot.read_struct_begin()
         while True:
             ifield_name, ifield_type, _ifield_id = iprot.read_field_begin()
-            if ifield_type == 0: # STOP
+            if ifield_type == 0:  # STOP
                 break
             elif ifield_name == 'added':
                 init_kwds['added'] = iprot.read_date_time()
             elif ifield_name == 'element_texts':
-                init_kwds['element_texts'] = tuple([yomeka.api.omeka_element_text.OmekaElementText.read(iprot) for _ in xrange(iprot.read_list_begin()[1])] + (iprot.read_list_end() is None and []))
+                init_kwds['element_texts'] = tuple([yomeka.api.omeka_element_text.OmekaElementText.read(iprot) for _ in range(iprot.read_list_begin()[1])] + (iprot.read_list_end() is None and []))
             elif ifield_name == 'featured':
                 init_kwds['featured'] = iprot.read_bool()
             elif ifield_name == 'id':
@@ -618,59 +518,25 @@ class OmekaCollection(object):
 
         return cls(**init_kwds)
 
-    def replace(
-        self,
-        added=None,
-        element_texts=None,
-        featured=None,
-        id=None,  # @ReservedAssignment
-        items_count=None,
-        modified=None,
-        public=None,
-        url=None,
-        json=None,
-    ):
-        '''
-        Copy this object, replace one or more fields, and return the copy.
+    def replacer(self):
+        return self.Builder.from_template(template=self)
 
-        :type added: datetime.datetime or None
-        :type element_texts: tuple(yomeka.api.omeka_element_text.OmekaElementText) or None
-        :type featured: bool or None
-        :type id: int or None
-        :type items_count: int or None
-        :type modified: datetime.datetime or None
-        :type public: bool or None
-        :type url: str or None
-        :type json: str or None
-        :rtype: yomeka.api.omeka_collection.OmekaCollection
-        '''
-
-        if added is None:
-            added = self.added
-        if element_texts is None:
-            element_texts = self.element_texts
-        if featured is None:
-            featured = self.featured
-        if id is None:
-            id = self.id  # @ReservedAssignment
-        if items_count is None:
-            items_count = self.items_count
-        if modified is None:
-            modified = self.modified
-        if public is None:
-            public = self.public
-        if url is None:
-            url = self.url
-        if json is None:
-            json = self.json
-        return self.__class__(added=added, element_texts=element_texts, featured=featured, id=id, items_count=items_count, modified=modified, public=public, url=url, json=json)
+    def to_builtins(self):
+        dict_ = {}
+        dict_["added"] = self.added
+        dict_["element_texts"] = tuple(element0.to_builtins() for element0 in self.element_texts)
+        dict_["featured"] = self.featured
+        dict_["id"] = self.id
+        dict_["items_count"] = self.items_count
+        dict_["modified"] = self.modified
+        dict_["public"] = self.public
+        dict_["url"] = self.url
+        if self.json is not None:
+            dict_["json"] = self.json
+        return dict_
 
     @property
-    def url(self):
-        '''
-        :rtype: str
-        '''
-
+    def url(self) -> str:
         return self.__url
 
     def write(self, oprot):
