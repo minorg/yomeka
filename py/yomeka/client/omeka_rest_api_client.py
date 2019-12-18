@@ -77,8 +77,7 @@ class OmekaRestApiClient(OmekaApi):
         per_page = 50
         while True:
             objects = get_method(page=page, per_page=per_page, **kwds)
-            for object_ in objects:
-                yield object_
+            yield from objects
             if len(objects) < per_page:
-                raise StopIteration
+                return
             page = page + 1
