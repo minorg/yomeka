@@ -15,7 +15,7 @@ class OmekaRestApiClient(OmekaApi):
             endpoint_url = endpoint_url + '/'
         self.__endpoint_url = endpoint_url
         self.__parser = OmekaJsonParser()
-        self.__logger = logging.getLogger(self.__class__.__module__ + '.' + self.__class__.__name__)
+        self.__logger = logging.getLogger(self.__class__.__name__)
 
     def get_all_collections(self, **kwds):
         return self.__get_all_pages(self.get_collections, **kwds)
