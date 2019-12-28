@@ -1,6 +1,6 @@
 # yomeka
-BSD-licensed client for the Omeka API
 
+BSD-licensed Python client for the Omeka Classic API
 
 ## Command line client
 
