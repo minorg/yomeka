@@ -1,6 +1,6 @@
 import unittest
 
-from test_credentials import TEST_API_KEY, TEST_ENDPOINT_URL
+from .test_credentials import TEST_API_KEY, TEST_COLLECTION_ID, TEST_ENDPOINT_URL, TEST_ITEM_ID
 from yomeka.api.no_such_omeka_collection_exception import NoSuchOmekaCollectionException
 from yomeka.api.no_such_omeka_item_exception import NoSuchOmekaItemException
 from yomeka.api.omeka_collection import OmekaCollection
@@ -14,7 +14,7 @@ class OmekaRestApiClientTest(unittest.TestCase):
         self.__client = OmekaRestApiClient(api_key=TEST_API_KEY, endpoint_url=TEST_ENDPOINT_URL)
 
     def test_get_collection(self):
-        self.__client.get_collection(id=1)
+        self.__client.get_collection(id=TEST_COLLECTION_ID)
         try:
             self.__client.get_collection(id=42)
             self.fail()
@@ -34,7 +34,7 @@ class OmekaRestApiClientTest(unittest.TestCase):
             self.assertTrue(isinstance(file_, OmekaFile))
 
     def test_get_item(self):
-        self.__client.get_item(id=1000)
+        self.__client.get_item(id=TEST_ITEM_ID)
         try:
             self.__client.get_item(id=4242424)
             self.fail()

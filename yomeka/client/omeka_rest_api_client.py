@@ -1,5 +1,6 @@
 import json
 import logging
+from urllib.error import HTTPError
 from urllib.request import urlopen
 
 from yomeka.api.no_such_omeka_collection_exception import NoSuchOmekaCollectionException
@@ -28,7 +29,13 @@ class OmekaRestApiClient(OmekaApi):
 
     def _get_collection(self, id):  # @ReservedAssignment
         url = self.__endpoint_url + 'api/collections/%d?key=' % id + self.__api_key
-        collection_dict = json.loads(self.__get_url(url))
+        try:
+            collection_dict = json.loads(self.__get_url(url))
+        except HTTPError as e:
+            if e.code == 404:
+                raise NoSuchOmekaCollectionException
+            else:
+                raise
         if collection_dict.get('message') == 'Invalid record. Record not found.':
             raise NoSuchOmekaCollectionException
         return self.__parser.parse_collection_dict(collection_dict)
@@ -51,7 +58,13 @@ class OmekaRestApiClient(OmekaApi):
 
     def _get_item(self, id):  # @ReservedAssignment
         url = self.__endpoint_url + 'api/items/%d?key=' % id + self.__api_key
-        item_dict = json.loads(self.__get_url(url))
+        try:
+            item_dict = json.loads(self.__get_url(url))
+        except HTTPError as e:
+            if e.code == 404:
+                raise NoSuchOmekaItemException
+            else:
+                raise
         if item_dict.get('message') == 'Invalid record. Record not found.':
             raise NoSuchOmekaItemException
         return self.__parser.parse_item_dict(item_dict)
