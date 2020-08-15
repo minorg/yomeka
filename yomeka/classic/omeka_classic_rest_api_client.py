@@ -4,21 +4,21 @@ from typing import Optional, Tuple
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
-from yomeka.api.no_such_omeka_collection_exception import NoSuchOmekaCollectionException
-from yomeka.api.no_such_omeka_item_exception import NoSuchOmekaItemException
-from yomeka.api.omeka_collection import OmekaCollection
-from yomeka.api.omeka_file import OmekaFile
-from yomeka.api.omeka_item import OmekaItem
-from yomeka.client.omeka_json_parser import OmekaJsonParser
+from yomeka.classic.no_such_omeka_collection_exception import NoSuchOmekaCollectionException
+from yomeka.classic.no_such_omeka_item_exception import NoSuchOmekaItemException
+from yomeka.classic.omeka_collection import OmekaCollection
+from yomeka.classic.omeka_file import OmekaFile
+from yomeka.classic.omeka_item import OmekaItem
+from yomeka.classic.omeka_classic_json_parser import OmekaClassicJsonParser
 
 
-class OmekaRestApiClient:
+class OmekaClassicRestApiClient:
     def __init__(self, api_key, endpoint_url):
         self.__api_key = api_key
         if not endpoint_url.endswith('/'):
             endpoint_url = endpoint_url + '/'
         self.__endpoint_url = endpoint_url
-        self.__parser = OmekaJsonParser()
+        self.__parser = OmekaClassicJsonParser()
         self.__logger = logging.getLogger(self.__class__.__name__)
 
     def get_all_collections(self, **kwds):

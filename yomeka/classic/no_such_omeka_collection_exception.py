@@ -1,13 +1,13 @@
-class NoSuchOmekaItemException(Exception):
+class NoSuchOmekaCollectionException(Exception):
     class Builder(object):
         def build(self):
-            return NoSuchOmekaItemException()
+            return NoSuchOmekaCollectionException()
 
         @classmethod
         def from_template(cls, template):
             '''
-            :type template: yomeka.api.no_such_omeka_item_exception.NoSuchOmekaItemException
-            :rtype: yomeka.api.no_such_omeka_item_exception.NoSuchOmekaItemException
+            :type template: yomeka.classic.no_such_omeka_collection_exception.NoSuchOmekaCollectionException
+            :rtype: yomeka.classic.no_such_omeka_collection_exception.NoSuchOmekaCollectionException
             '''
 
             builder = cls()
@@ -24,10 +24,10 @@ class NoSuchOmekaItemException(Exception):
         return not self.__eq__(other)
 
     def __repr__(self):
-        return 'NoSuchOmekaItemException()'
+        return 'NoSuchOmekaCollectionException()'
 
     def __str__(self):
-        return 'NoSuchOmekaItemException()'
+        return 'NoSuchOmekaCollectionException()'
 
     @classmethod
     def builder(cls):
@@ -50,7 +50,7 @@ class NoSuchOmekaItemException(Exception):
         Read a new object from the given input protocol and return the object.
 
         :type iprot: thryft.protocol._input_protocol._InputProtocol
-        :rtype: yomeka.api.no_such_omeka_item_exception.NoSuchOmekaItemException
+        :rtype: yomeka.classic.no_such_omeka_collection_exception.NoSuchOmekaCollectionException
         '''
 
         iprot.read_struct_begin()
@@ -70,10 +70,10 @@ class NoSuchOmekaItemException(Exception):
         Write this object to the given output protocol and return self.
 
         :type oprot: thryft.protocol._output_protocol._OutputProtocol
-        :rtype: yomeka.api.no_such_omeka_item_exception.NoSuchOmekaItemException
+        :rtype: yomeka.classic.no_such_omeka_collection_exception.NoSuchOmekaCollectionException
         '''
 
-        oprot.write_struct_begin('NoSuchOmekaItemException')
+        oprot.write_struct_begin('NoSuchOmekaCollectionException')
 
         oprot.write_field_stop()
 

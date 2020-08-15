@@ -1,18 +1,18 @@
 from datetime import datetime
 import json
 
-from yomeka.api.omeka_collection import OmekaCollection
-from yomeka.api.omeka_element import OmekaElement
-from yomeka.api.omeka_element_set import OmekaElementSet
-from yomeka.api.omeka_element_text import OmekaElementText
-from yomeka.api.omeka_file import OmekaFile
-from yomeka.api.omeka_file_urls import OmekaFileUrls
-from yomeka.api.omeka_item import OmekaItem
-from yomeka.api.omeka_item_type import OmekaItemType
-from yomeka.api.omeka_tag import OmekaTag
+from yomeka.classic.omeka_collection import OmekaCollection
+from yomeka.classic.omeka_element import OmekaElement
+from yomeka.classic.omeka_element_set import OmekaElementSet
+from yomeka.classic.omeka_element_text import OmekaElementText
+from yomeka.classic.omeka_file import OmekaFile
+from yomeka.classic.omeka_file_urls import OmekaFileUrls
+from yomeka.classic.omeka_item import OmekaItem
+from yomeka.classic.omeka_item_type import OmekaItemType
+from yomeka.classic.omeka_tag import OmekaTag
 
 
-class OmekaJsonParser(object):
+class OmekaClassicJsonParser(object):
     def parse_collection_dict(self, collection_dict):
         return \
             OmekaCollection(

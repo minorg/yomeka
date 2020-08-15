@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import NamedTuple, Optional, Tuple
 
-from yomeka.api.omeka_element_text import OmekaElementText
-from yomeka.api.omeka_file_urls import OmekaFileUrls
+from yomeka.classic.omeka_element_text import OmekaElementText
+from yomeka.classic.omeka_file_urls import OmekaFileUrls
 
 
 class OmekaFile(NamedTuple):

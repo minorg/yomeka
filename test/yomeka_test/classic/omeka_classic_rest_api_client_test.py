@@ -1,17 +1,17 @@
 import unittest
 
 from .test_credentials import TEST_API_KEY, TEST_COLLECTION_ID, TEST_ENDPOINT_URL, TEST_ITEM_ID
-from yomeka.api.no_such_omeka_collection_exception import NoSuchOmekaCollectionException
-from yomeka.api.no_such_omeka_item_exception import NoSuchOmekaItemException
-from yomeka.api.omeka_collection import OmekaCollection
-from yomeka.api.omeka_file import OmekaFile
-from yomeka.api.omeka_item import OmekaItem
-from yomeka.client.omeka_rest_api_client import OmekaRestApiClient
+from yomeka.classic.no_such_omeka_collection_exception import NoSuchOmekaCollectionException
+from yomeka.classic.no_such_omeka_item_exception import NoSuchOmekaItemException
+from yomeka.classic.omeka_collection import OmekaCollection
+from yomeka.classic.omeka_file import OmekaFile
+from yomeka.classic.omeka_item import OmekaItem
+from yomeka.classic.omeka_classic_rest_api_client import OmekaClassicRestApiClient
 
 
-class OmekaRestApiClientTest(unittest.TestCase):
+class OmekaClassicRestApiClientTest(unittest.TestCase):
     def setUp(self):
-        self.__client = OmekaRestApiClient(api_key=TEST_API_KEY, endpoint_url=TEST_ENDPOINT_URL)
+        self.__client = OmekaClassicRestApiClient(api_key=TEST_API_KEY, endpoint_url=TEST_ENDPOINT_URL)
 
     def test_get_collection(self):
         self.__client.get_collection(id=TEST_COLLECTION_ID)

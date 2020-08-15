@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import NamedTuple, Optional, Tuple
 
-from yomeka.api.omeka_element_text import OmekaElementText
-from yomeka.api.omeka_item_type import OmekaItemType
-from yomeka.api.omeka_tag import OmekaTag
+from yomeka.classic.omeka_element_text import OmekaElementText
+from yomeka.classic.omeka_item_type import OmekaItemType
+from yomeka.classic.omeka_tag import OmekaTag
 
 
 class OmekaItem(NamedTuple):

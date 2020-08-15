@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import NamedTuple, Optional, Tuple
 
-from yomeka.api.omeka_element_text import OmekaElementText
+from yomeka.classic.omeka_element_text import OmekaElementText
 
 
 class OmekaCollection(NamedTuple):
