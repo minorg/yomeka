@@ -14,7 +14,7 @@ class OmekaItem(NamedTuple):
     id: int
     modified: datetime
     public: bool
-    tag: Tuple[OmekaTag, ...]
+    tags: Tuple[OmekaTag, ...]
     url: str
     item_type: Optional[OmekaItemType] = None
     json: Optional[str] = None
