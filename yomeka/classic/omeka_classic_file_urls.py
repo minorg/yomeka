@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
 
-class OmekaFileUrls(NamedTuple):
+class OmekaClassicFileUrls(NamedTuple):
     original: str
     fullsize: str
     square_thumbnail: str

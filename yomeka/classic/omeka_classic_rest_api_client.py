@@ -4,11 +4,11 @@ from typing import Optional, Tuple
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
-from yomeka.classic.no_such_omeka_collection_exception import NoSuchOmekaCollectionException
-from yomeka.classic.no_such_omeka_item_exception import NoSuchOmekaItemException
-from yomeka.classic.omeka_collection import OmekaCollection
-from yomeka.classic.omeka_file import OmekaFile
-from yomeka.classic.omeka_item import OmekaItem
+from yomeka.classic.no_such_omeka_classic_collection_exception import NoSuchOmekaClassicCollectionException
+from yomeka.classic.no_such_omeka_classic_item_exception import NoSuchOmekaClassicItemException
+from yomeka.classic.omeka_classic_collection import OmekaClassicCollection
+from yomeka.classic.omeka_classic_file import OmekaClassicFile
+from yomeka.classic.omeka_classic_item import OmekaClassicItem
 from yomeka.classic.omeka_classic_json_parser import OmekaClassicJsonParser
 
 
@@ -40,20 +40,20 @@ class OmekaClassicRestApiClient:
                 return
             page = page + 1
 
-    def get_collection(self, id: int) -> OmekaCollection:  # @ReservedAssignment
+    def get_collection(self, id: int) -> OmekaClassicCollection:  # @ReservedAssignment
         url = self.__endpoint_url + 'api/collections/%d?key=' % id + self.__api_key
         try:
             collection_dict = json.loads(self.__get_url(url))
         except HTTPError as e:
             if e.code == 404:
-                raise NoSuchOmekaCollectionException
+                raise NoSuchOmekaClassicCollectionException
             else:
                 raise
         if collection_dict.get('message') == 'Invalid record. Record not found.':
-            raise NoSuchOmekaCollectionException
+            raise NoSuchOmekaClassicCollectionException
         return self.__parser.parse_collection_dict(collection_dict)
 
-    def get_collections(self, *, page: Optional[int] = None, per_page: Optional[int] = None, **kwds) -> Tuple[OmekaCollection, ...]:
+    def get_collections(self, *, page: Optional[int] = None, per_page: Optional[int] = None, **kwds) -> Tuple[OmekaClassicCollection, ...]:
         url = self.__endpoint_url + 'api/collections?key=' + self.__api_key
         if page is not None:
             kwds["page"] = page
@@ -65,7 +65,7 @@ class OmekaClassicRestApiClient:
             url = url + "&%(key)s=%(value)s" % locals()
         return self.__parser.parse_collection_dicts(json.loads(self.__get_url(url)))
 
-    def get_files(self, *, item: Optional[int] = None, page: Optional[int] = None, per_page: Optional[int] = None, **kwds) -> Tuple[OmekaFile, ...]:
+    def get_files(self, *, item: Optional[int] = None, page: Optional[int] = None, per_page: Optional[int] = None, **kwds) -> Tuple[OmekaClassicFile, ...]:
         url = self.__endpoint_url + 'api/files?key=' + self.__api_key
         if item is not None:
             kwds["item"] = item
@@ -79,20 +79,20 @@ class OmekaClassicRestApiClient:
             url = url + "&%(key)s=%(value)s" % locals()
         return self.__parser.parse_file_dicts(json.loads(self.__get_url(url)))
 
-    def get_item(self, id: int) -> OmekaItem:  # @ReservedAssignment
+    def get_item(self, id: int) -> OmekaClassicItem:  # @ReservedAssignment
         url = self.__endpoint_url + 'api/items/%d?key=' % id + self.__api_key
         try:
             item_dict = json.loads(self.__get_url(url))
         except HTTPError as e:
             if e.code == 404:
-                raise NoSuchOmekaItemException
+                raise NoSuchOmekaClassicItemException
             else:
                 raise
         if item_dict.get('message') == 'Invalid record. Record not found.':
-            raise NoSuchOmekaItemException
+            raise NoSuchOmekaClassicItemException
         return self.__parser.parse_item_dict(item_dict)
 
-    def get_items(self, collection: Optional[int] = None, page: Optional[int] = None, per_page: Optional[int] = None, **kwds) -> Tuple[OmekaItem, ...]:
+    def get_items(self, collection: Optional[int] = None, page: Optional[int] = None, per_page: Optional[int] = None, **kwds) -> Tuple[OmekaClassicItem, ...]:
         url = self.__endpoint_url + 'api/items?key=' + self.__api_key
         if collection is not None:
             kwds["collection"] = collection

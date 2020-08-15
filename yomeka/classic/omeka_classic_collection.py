@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import NamedTuple, Optional, Tuple
 
-from yomeka.classic.omeka_element_text import OmekaElementText
+from yomeka.classic.omeka_classic_element_text import OmekaClassicElementText
 
 
-class OmekaCollection(NamedTuple):
+class OmekaClassicCollection(NamedTuple):
     added: datetime
-    element_texts: Tuple[OmekaElementText, ...]
+    element_texts: Tuple[OmekaClassicElementText, ...]
     featured: bool
     id: int
     items_count: int

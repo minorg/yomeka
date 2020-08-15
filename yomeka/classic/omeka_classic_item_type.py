@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
 
-class OmekaItemType(NamedTuple):
+class OmekaClassicItemType(NamedTuple):
     id: int
     name: str
     url: str

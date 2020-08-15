@@ -1,15 +1,15 @@
 from datetime import datetime
 from typing import NamedTuple, Optional, Tuple
 
-from yomeka.classic.omeka_element_text import OmekaElementText
-from yomeka.classic.omeka_file_urls import OmekaFileUrls
+from yomeka.classic.omeka_classic_element_text import OmekaClassicElementText
+from yomeka.classic.omeka_classic_file_urls import OmekaClassicFileUrls
 
 
-class OmekaFile(NamedTuple):
+class OmekaClassicFile(NamedTuple):
     added: datetime
     authentication: str
-    element_texts: Tuple[OmekaElementText, ...]
-    file_urls: OmekaFileUrls
+    element_texts: Tuple[OmekaClassicElementText, ...]
+    file_urls: OmekaClassicFileUrls
     has_derivative_image: bool
     id: int
     item_id: int

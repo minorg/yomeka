@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
 
-class OmekaTag(NamedTuple):
+class OmekaClassicElementSet(NamedTuple):
     id: int
     name: str
     url: str

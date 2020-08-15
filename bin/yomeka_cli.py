@@ -12,7 +12,7 @@ except ImportError:
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
     __import__('yomeka')
 
-from yomeka.client.omeka_rest_api_client import OmekaRestApiClient
+from yomeka.classic.omeka_classic_rest_api_client import OmekaClassicRestApiClient
 
 
 
@@ -51,7 +51,7 @@ class YomekaCli(object):
 
         args = argument_parser.parse_args()
 
-        client = OmekaRestApiClient(api_key=args.api_key, endpoint_url=args.endpoint_url)
+        client = OmekaClassicRestApiClient(api_key=args.api_key, endpoint_url=args.endpoint_url)
 
         if args.output_file is not None:
             output_file = open(args.output_file, 'w+b')

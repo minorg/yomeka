@@ -1,21 +1,21 @@
 from datetime import datetime
 import json
 
-from yomeka.classic.omeka_collection import OmekaCollection
-from yomeka.classic.omeka_element import OmekaElement
-from yomeka.classic.omeka_element_set import OmekaElementSet
-from yomeka.classic.omeka_element_text import OmekaElementText
-from yomeka.classic.omeka_file import OmekaFile
-from yomeka.classic.omeka_file_urls import OmekaFileUrls
-from yomeka.classic.omeka_item import OmekaItem
-from yomeka.classic.omeka_item_type import OmekaItemType
-from yomeka.classic.omeka_tag import OmekaTag
+from yomeka.classic.omeka_classic_collection import OmekaClassicCollection
+from yomeka.classic.omeka_classic_element import OmekaClassicElement
+from yomeka.classic.omeka_classic_element_set import OmekaClassicElementSet
+from yomeka.classic.omeka_classic_element_text import OmekaClassicElementText
+from yomeka.classic.omeka_classic_file import OmekaClassicFile
+from yomeka.classic.omeka_classic_file_urls import OmekaClassicFileUrls
+from yomeka.classic.omeka_classic_item import OmekaClassicItem
+from yomeka.classic.omeka_classic_item_type import OmekaClassicItemType
+from yomeka.classic.omeka_classic_tag import OmekaClassicTag
 
 
 class OmekaClassicJsonParser(object):
     def parse_collection_dict(self, collection_dict):
         return \
-            OmekaCollection(
+            OmekaClassicCollection(
                 element_texts=self.__parse_element_texts(collection_dict.get('element_texts', [])),
                 added=(self.__parse_date_time(collection_dict['added'])),
                 featured=bool(collection_dict['featured']),
@@ -43,7 +43,7 @@ class OmekaClassicJsonParser(object):
         for element_text_dict in element_text_dicts:
             element_dict = element_text_dict['element']
             element = \
-                OmekaElement(
+                OmekaClassicElement(
                     id=(element_dict['id']),
                     name=(element_dict['name']),
                     url=(element_dict['url']),
@@ -51,14 +51,14 @@ class OmekaClassicJsonParser(object):
 
             element_set_dict = element_text_dict['element_set']
             element_set = \
-                OmekaElementSet(
+                OmekaClassicElementSet(
                     id=(element_set_dict['id']),
                     name=(element_set_dict['name']),
                     url=(element_set_dict['url']),
                 )
 
             element_text = \
-                OmekaElementText(
+                OmekaClassicElementText(
                     element=(element),
                     element_set=(element_set),
                     html=(element_text_dict['html']),
@@ -68,10 +68,10 @@ class OmekaClassicJsonParser(object):
         return tuple(element_texts)
 
     def parse_file_dict(self, file_dict):
-        file_urls = OmekaFileUrls(**file_dict["file_urls"])
+        file_urls = OmekaClassicFileUrls(**file_dict["file_urls"])
 
         return \
-            OmekaFile(
+            OmekaClassicFile(
                 authentication=(file_dict['authentication']),
                 element_texts=(self.__parse_element_texts(file_dict.get('element_texts', []))),
                 added=(self.__parse_date_time(file_dict['added'])),
@@ -101,7 +101,7 @@ class OmekaClassicJsonParser(object):
         item_type_dict = item_dict.get('item_type')
         if item_type_dict is not None:
             item_type = \
-                OmekaItemType(
+                OmekaClassicItemType(
                     id=(item_type_dict['id']),
                     name=(item_type_dict['name']),
                     url=(item_type_dict['url']),
@@ -112,7 +112,7 @@ class OmekaClassicJsonParser(object):
         tags = []
         for tag_dict in item_dict.get('tags', []):
             tag = \
-                OmekaTag(
+                OmekaClassicTag(
                     id=(tag_dict['id']),
                     name=(tag_dict['name']),
                     url=(tag_dict['url']),
@@ -121,7 +121,7 @@ class OmekaClassicJsonParser(object):
         tags = tuple(tags)
 
         return \
-            OmekaItem(
+            OmekaClassicItem(
                 added=(self.__parse_date_time(item_dict['added'])),
                 element_texts=(element_texts),
                 featured=(item_dict['featured']),
